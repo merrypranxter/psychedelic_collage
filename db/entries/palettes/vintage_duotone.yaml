@@ -1,0 +1,64 @@
+id: psc.palette.vintage_duotone.v1
+type: palette
+name: Vintage Duotone
+aliases: [duotone, sepia_cyan, vintage_print, two_color_print]
+summary: "Two-color tinted print palette for vintage photomontage and archival collage aesthetics."
+description: |
+  Duotone printing maps image tones to two inks rather than full-color CMYK.
+  In vintage contexts, this typically means a warm shadow ink (sepia, warm black,
+  burnt umber) paired with a cool highlight ink (dusty cyan, pale blue, warm cream).
+  The result reads as aged photograph or Depression-era lithograph.
+
+  Modernized for collage: use as a unifying grade pass over disparate photographic
+  elements — it normalizes different source imagery into a cohesive tonal key.
+  Apply via: convert to greyscale → map shadows to warm hex → map highlights to cool hex.
+tags:
+  color: [earth, duotone, monochrome]
+  print: [offset, newsprint]
+  texture: [paper_grain, film_grain, dust]
+  mood: [dreamy, uncanny, mystical]
+  era: [60s, 70s]
+colors:
+  - name: Warm Shadow
+    hex: "#3B2010"
+    role: shadow_ink
+  - name: Burnt Sienna Mid
+    hex: "#7C4A1E"
+    role: midtone_warm
+  - name: Aged Cream
+    hex: "#F2E8CE"
+    role: highlight_ink
+  - name: Dusty Cyan
+    hex: "#7BBAC0"
+    role: cool_accent
+  - name: Faded Olive
+    hex: "#8F8B5E"
+    role: midtone_neutral
+  - name: Foxed Paper
+    hex: "#D4C497"
+    role: background
+constraints:
+  do:
+    - "Map pure shadows to Warm Shadow and pure highlights to Aged Cream."
+    - "Use Dusty Cyan sparingly as a cool accent pop on specific elements."
+    - "Apply Foxed Paper as background base before compositing imagery."
+  avoid:
+    - "Saturated colors elsewhere in composition — ruins the aged quality."
+    - "Clean white backgrounds — always use a warm paper tone."
+compat:
+  works_with:
+    - psc.style.surreal_photomontage.v1
+    - psc.technique.collage_shadow_depth.v1
+    - psc.material.aged_newsprint.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: prompt_fragment
+    value: "vintage duotone print, aged photograph, warm sepia shadows, dusty cyan highlights"
+  - kind: shader_hint
+    value: "greyscale → remap: dark → #3B2010, light → #F2E8CE, add cyan at top highlights"
+provenance:
+  sources:
+    - kind: note
+      value: "Historical duotone printing technique adapted for digital collage"
+version: 1
+created_at: "2026-04-10"

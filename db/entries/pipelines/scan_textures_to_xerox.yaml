@@ -1,0 +1,57 @@
+id: psc.pipeline.scan_textures_to_xerox.v1
+type: pipeline
+name: Scan Textures → Collage Stack → Xerox Pass
+aliases: [scan_to_xerox, analog_scan_pipeline, xerox_collage_pipeline]
+summary: "Build a collage from physical scanned textures and elements, then apply xerox generation passes."
+description: |
+  An analog-first pipeline that starts from scanned physical materials, assembles
+  them in a digital collage stack, then runs multiple xerox/photocopy simulation
+  passes to produce a multi-generation photocopied aesthetic. Each generation pass
+  degrades the image slightly, building up authentic zine texture.
+tags:
+  medium: [analog, hybrid]
+  source: [scan, magazine]
+  print: [xerox, newsprint]
+  texture: [paper_grain, scratches, dust, film_grain]
+  mood: [chaotic, aggressive]
+  era: [70s, 90s_rave]
+inputs:
+  - kind: image
+    notes: "Scanned physical elements: textures, photos, clippings, text blocks"
+steps:
+  - use: psc.technique.texture_sourcing.v1
+    notes: "Prepare and organize scanned textures — level, color-correct"
+  - use: psc.technique.cutout_layering.v1
+    params:
+      edge_feather_px: 0.0
+      shadow_opacity: 0.3
+    notes: "Hard-cut masks for zine aesthetic"
+  - use: psc.technique.compositing_modes.v1
+    params:
+      blend_mode: multiply
+    notes: "Multiply blend for ink/texture layers"
+  - use: psc.print_artifact.halftone_screen.v1
+    params:
+      frequency: 40.0
+      angle_deg: 45.0
+    notes: "Coarse halftone for newsprint feel"
+  - use: psc.print_artifact.photocopy_noise.v1
+    params:
+      generation_passes: 3
+      grain_amount: 0.2
+      threshold: 0.52
+    notes: "Multi-generation photocopy degradation"
+outputs:
+  - kind: image
+    notes: "Multi-generation xerox collage with analog texture"
+compat:
+  works_with:
+    - psc.style.analog_zine_xerox.v1
+    - psc.palette.vintage_duotone.v1
+    - psc.typography.ransom_note.v1
+provenance:
+  sources:
+    - kind: note
+      value: "Analog scan + xerox collage pipeline"
+version: 1
+created_at: "2026-04-10"

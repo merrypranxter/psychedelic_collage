@@ -1,0 +1,69 @@
+id: psc.technique.cutout_layering.v1
+type: technique
+name: Cutout Layering
+aliases: [paper_cutout, layer_stack, collage_compositing]
+summary: "Building depth and narrative by stacking multiple masked/cut image layers."
+description: |
+  The foundational collage operation: isolate an element from its source context
+  (magazine, photo, AI gen) and place it into a new compositional layer stack.
+  The craft is in the edge quality, the implied depth (parallax between layers),
+  and the intentional breaks in spatial logic.
+
+  Layer order typically: background field → midground texture → figure elements
+  → foreground cutouts → typography → effects. Each layer can use blend modes
+  (multiply, screen, overlay) to interact with layers below.
+
+  Digital tools: Photoshop/Affinity lasso + refine edge, AI-based background
+  removal (remove.bg, Segment Anything), manual mask refinement. In generative
+  pipelines, depth estimation maps can drive automated layer separation.
+
+  Key decisions: how clean is the edge? (scissors = clean; torn = organic)
+  Does the cutout retain a shadow, a glow, or a physical thickness illusion?
+tags:
+  medium: [analog, digital, hybrid]
+  source: [magazine, photo, scan, AI_gen]
+  cut_edge: [scissor, torn, mask_soft, sticker]
+  composition: [collage_stack, maximalist]
+  texture: [paper_grain, glue, tape]
+  mood: [uncanny, chaotic, dreamy]
+parameters:
+  - name: edge_feather_px
+    type: float
+    default: 0.0
+    range: [0.0, 20.0]
+    description: "Feather/blur radius applied to mask edge."
+  - name: shadow_opacity
+    type: float
+    default: 0.4
+    range: [0.0, 1.0]
+    description: "Opacity of the drop shadow below the cutout."
+  - name: shadow_offset_px
+    type: float
+    default: 4.0
+    range: [0.0, 30.0]
+    description: "Pixel offset for shadow (simulates physical paper thickness)."
+constraints:
+  do:
+    - "Vary edge treatments across layers — mix clean scissor cuts with torn edges."
+    - "Add a subtle shadow on raised elements to sell physical depth."
+    - "Consider color temperature consistency — or deliberately break it."
+  avoid:
+    - "Identical edge treatment on all elements — variety is the collage texture."
+    - "Floating elements with no shadow or ground relationship."
+compat:
+  works_with:
+    - psc.technique.collage_shadow_depth.v1
+    - psc.technique.compositing_modes.v1
+    - psc.style.surreal_photomontage.v1
+    - psc.style.analog_zine_xerox.v1
+outputs:
+  - kind: prompt_fragment
+    value: "paper cutout collage, layered stacked elements, mixed media, visible paper edges"
+  - kind: shader_hint
+    value: "depth map → layer separation → per-layer shadow offset composite"
+provenance:
+  sources:
+    - kind: note
+      value: "Core collage technique, universal to all collage styles in this database"
+version: 1
+created_at: "2026-04-10"

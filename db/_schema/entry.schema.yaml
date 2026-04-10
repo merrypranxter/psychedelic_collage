@@ -1,0 +1,199 @@
+# db/_schema/entry.schema.yaml
+# Universal schema for all psychedelic collage database entries.
+# Every file under db/entries/<category>/<slug>.yaml should conform to this shape.
+# Fields marked "(required)" must always be present.
+# Fields marked "(optional)" may be omitted if not applicable.
+
+fields:
+
+  id:
+    type: string
+    required: true
+    description: |
+      Globally unique identifier.
+      Format: psc.<type>.<slug>.v<n>
+      Examples: psc.style.analog_zine.v1
+                psc.pipeline.ai_to_halftone.v1
+    pattern: "^psc\\.[a-z_]+\\.[a-z0-9_]+\\.v\\d+$"
+
+  type:
+    type: enum
+    required: true
+    values:
+      - style
+      - technique
+      - palette
+      - motif
+      - composition
+      - typography
+      - material
+      - print_artifact
+      - shader
+      - pipeline
+      - reference
+    description: Broad category that determines how the entry is used.
+
+  name:
+    type: string
+    required: true
+    description: Human-readable display name.
+
+  aliases:
+    type: list[string]
+    required: false
+    description: Alternative names, common abbreviations, or keyword synonyms.
+
+  summary:
+    type: string
+    required: true
+    description: One-sentence description — used in index listings and tooltips.
+
+  description:
+    type: string (multiline)
+    required: true
+    description: |
+      Full description of the entry. Cover: what it looks like, when to use it,
+      cultural/historical context, practical tips. Markdown is welcome.
+
+  tags:
+    type: object
+    required: true
+    description: |
+      Key/value map where each key is a tag axis from tagsets.yaml and
+      each value is a single string or a list of strings from that axis.
+    example:
+      medium: [analog, digital]
+      color: [neon, acid]
+      era: [60s]
+      mood: [euphoric, chaotic]
+
+  constraints:
+    type: object
+    required: false
+    fields:
+      do:
+        type: list[string]
+        description: Practices to follow when using this entry.
+      avoid:
+        type: list[string]
+        description: Anti-patterns to avoid.
+
+  parameters:
+    type: list[object]
+    required: false
+    description: Tuneable numeric or enum parameters for shader / tool entries.
+    item_fields:
+      name:
+        type: string
+        required: true
+      type:
+        type: enum
+        values: [int, float, bool, enum, color, string]
+        required: true
+      default:
+        type: any
+        required: false
+      range:
+        type: [number, number]
+        required: false
+        description: Inclusive [min, max] for numeric types.
+      options:
+        type: list[string]
+        required: false
+        description: Allowed values for enum type.
+      description:
+        type: string
+        required: false
+
+  compat:
+    type: object
+    required: false
+    description: Cross-reference links to compatible or incompatible entries.
+    fields:
+      works_with:
+        type: list[string]
+        description: IDs of entries that pair well with this one.
+      not_ideal_with:
+        type: list[string]
+        description: IDs of entries that conflict or clash.
+
+  # --- Pipeline-only fields ---
+  inputs:
+    type: list[object]
+    required: false
+    description: For pipeline entries — describe what feeds in.
+    item_fields:
+      kind:
+        type: enum
+        values: [image, video, audio, text, mesh, shader, any]
+      notes:
+        type: string
+
+  steps:
+    type: list[object]
+    required: false
+    description: Ordered sequence of operations for pipeline entries.
+    item_fields:
+      use:
+        type: string
+        description: ID of the entry providing this step.
+      params:
+        type: object
+        description: Parameter overrides for this step instance.
+      notes:
+        type: string
+
+  outputs:
+    type: list[object]
+    required: false
+    description: What this entry produces (pipeline) or hints it provides (other).
+    item_fields:
+      kind:
+        type: enum
+        values: [image, video, shader_hint, prompt_fragment, param_preset, code_fragment, any]
+      value:
+        type: string
+        description: The actual hint, fragment, or output description.
+      notes:
+        type: string
+
+  # --- Palette-only fields ---
+  colors:
+    type: list[object]
+    required: false
+    description: For palette entries — explicit named colors with hex values.
+    item_fields:
+      name:
+        type: string
+      hex:
+        type: string
+        pattern: "^#[0-9A-Fa-f]{6}$"
+      role:
+        type: string
+        description: Semantic role (e.g. background, accent, midtone, shadow).
+
+  # --- Provenance ---
+  provenance:
+    type: object
+    required: false
+    fields:
+      sources:
+        type: list[object]
+        item_fields:
+          kind:
+            type: enum
+            values: [note, url, book, image_ref]
+          value:
+            type: string
+
+  version:
+    type: int
+    required: true
+    default: 1
+    description: Entry version. Increment when making breaking changes.
+
+  created_at:
+    type: string
+    required: true
+    description: ISO date of initial creation. Format YYYY-MM-DD.
+    pattern: "^\\d{4}-\\d{2}-\\d{2}$"

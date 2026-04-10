@@ -1,0 +1,74 @@
+id: psc.print_artifact.halftone_screen.v1
+type: print_artifact
+name: Halftone Screen
+aliases: [halftone, dot_screen, line_screen, halftone_dots]
+summary: "Simulating the dot or line screen pattern of offset/screen-print halftone reproduction."
+description: |
+  Halftone is the process of converting continuous-tone imagery into a pattern of
+  dots (or lines) of varying size that simulate tonal gradation when printed at
+  limited ink passes. In collage aesthetics, the halftone pattern is celebrated
+  as both a print artifact and a design element.
+
+  Types:
+  - **Round dot halftone**: classic newspaper/magazine look. Dots grow from small
+    (highlights) to merged clusters (shadows).
+  - **Line screen halftone**: horizontal or diagonal parallel lines. Common in 1960s
+    poster art and pop art (Lichtenstein style).
+  - **Stochastic/FM screening**: random dot placement, less structured. More grain-like.
+  - **Crosshatch**: two line screens at 45° to each other.
+
+  Shader implementation: convert to greyscale → sample threshold pattern from
+  tiled halftone texture or compute analytically (screen-space dot grid).
+tags:
+  print: [halftone, newsprint, offset]
+  texture: [ink_bleed, paper_grain]
+  color: [monochrome, CMYK]
+  mood: [chaotic, aggressive]
+  era: [60s, 70s, contemporary]
+  shader_ops: [halftone, posterize, dither]
+parameters:
+  - name: screen_angle_deg
+    type: float
+    default: 45.0
+    range: [0.0, 90.0]
+    description: "Angle of halftone screen grid in degrees."
+  - name: screen_frequency
+    type: float
+    default: 60.0
+    range: [10.0, 300.0]
+    description: "Lines per inch (LPI) equivalent — higher = finer dots."
+  - name: dot_shape
+    type: enum
+    options: [round, square, diamond, line, cross, ellipse]
+    default: round
+    description: "Shape of the halftone dot element."
+  - name: gamma_correction
+    type: float
+    default: 1.0
+    range: [0.5, 2.0]
+    description: "Gamma correction applied before thresholding."
+constraints:
+  do:
+    - "Use 45° screen angle for single-color halftone — minimizes moire."
+    - "For CMYK simulation: C=105°, M=75°, Y=90°, K=45°."
+    - "Apply over multiply blend for ink-on-paper look."
+  avoid:
+    - "Fine screen frequencies (>150 LPI) for newsprint/zine aesthetics — too clean."
+    - "Applying halftone after upscaling — dots become jagged."
+compat:
+  works_with:
+    - psc.print_artifact.cmyk_misregistration.v1
+    - psc.style.analog_zine_xerox.v1
+    - psc.style.sixties_poster_op_art.v1
+    - psc.shader.halftone_screen.v1
+outputs:
+  - kind: shader_hint
+    value: "greyscale → dot_screen function at screen_frequency LPI at screen_angle → threshold → multiply blend"
+  - kind: prompt_fragment
+    value: "halftone dot screen, newsprint, offset print dots, Roy Lichtenstein style"
+provenance:
+  sources:
+    - kind: note
+      value: "Classic commercial printing halftone technique, central to pop art and zine aesthetics"
+version: 1
+created_at: "2026-04-10"

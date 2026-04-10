@@ -1,0 +1,58 @@
+id: psc.style.analog_zine_xerox.v1
+type: style
+name: Analog Zine / Xerox Collage
+aliases: [zine, xerox_art, photocopy_collage, copy_art]
+summary: "Low-fi, high-energy collage aesthetic built from photocopied, cut, and pasted ephemera."
+description: |
+  Rooted in DIY punk and underground publishing (1970s–present), this style treats
+  the photocopy machine as both a reproduction tool and an expressive filter.
+  Halftone breakup, streak artifacts, tonal compression, and the tactile presence
+  of cut paper are all celebrated rather than corrected.
+
+  Typical ingredients: magazine cutouts, handwritten text, rubber-stamped graphics,
+  screened photos, crude borders, and urgent hand-lettering—all assembled on a
+  photocopier platen, sometimes copied multiple generations to increase grain and
+  contrast. Color is rare or limited to a second spot ink run.
+
+  In digital/shader contexts, replicate via: multi-pass grain, contrast crush,
+  halftone overlay, xerox-streak displacement, vignette burn, and paper texture composite.
+tags:
+  medium: [analog, hybrid]
+  source: [magazine, scan, illustration]
+  cut_edge: [scissor, torn]
+  print: [xerox, newsprint, halftone]
+  color: [monochrome]
+  texture: [paper_grain, dust, scratches, ink_bleed]
+  composition: [maximalist, border_clutter]
+  typography: [ransom_note, handlettered, stencil]
+  mood: [chaotic, aggressive]
+  era: [70s, 90s_rave, contemporary]
+  subject: [portrait, abstract]
+constraints:
+  do:
+    - "Keep palette near pure black/white with at most one spot color."
+    - "Let photocopy grain be visible — do not smooth or sharpen away artifacts."
+    - "Use irregular borders, torn edges, and visible glue/tape marks."
+    - "Mix type sizes and sources aggressively (ransom-note principle)."
+  avoid:
+    - "Clean, antialiased edges — everything should feel physically cut or burned."
+    - "More than 2-3 ink colors unless simulating a multi-pass riso."
+    - "Excessive symmetry — the power is in imperfect asymmetric layout."
+compat:
+  works_with:
+    - psc.print_artifact.photocopy_noise.v1
+    - psc.print_artifact.halftone_screen.v1
+    - psc.technique.cutout_layering.v1
+    - psc.typography.ransom_note.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: prompt_fragment
+    value: "analog zine collage, xerox photocopy aesthetic, cut-and-paste, black and white, grain, torn paper"
+  - kind: shader_hint
+    value: "threshold + grain overlay + halftone dots + streak displacement + vignette"
+provenance:
+  sources:
+    - kind: note
+      value: "Curated by merrypranxter — inspired by 1980s–90s punk/zine culture"
+version: 1
+created_at: "2026-04-10"

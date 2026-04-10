@@ -1,0 +1,49 @@
+id: psc.motif.botanical_engraving.v1
+type: motif
+name: Botanical Engraving
+aliases: [botanical_illustration, flora_engraving, nature_motif, vintage_botanical]
+summary: "Victorian-era botanical engraving imagery as collage motif and texture source."
+description: |
+  Victorian botanical engravings (1820–1900) are ideal psychedelic collage source
+  material: they are public domain, high detail, strongly graphic (black line on
+  white), and carry connotations of natural science, taxonomy, and ordered beauty
+  that contrast powerfully with psychedelic disorientation.
+
+  Common uses: isolated plant/flower elements as foreground cutouts; whole plate
+  illustrations as background fields with color washes; leaf/stem motifs as
+  border decorations; halftone-treated engravings as texture fills.
+
+  Excellent public domain sources: Biodiversity Heritage Library, Wikimedia Commons
+  Category:Botanical illustrations, Project Gutenberg illustrated botany texts.
+tags:
+  medium: [analog, hybrid, digital]
+  source: [public_domain, scan]
+  cut_edge: [scissor, torn, mask_soft]
+  texture: [paper_grain, ink_bleed]
+  color: [monochrome, duotone, earth]
+  mood: [mystical, dreamy, uncanny]
+  subject: [nature]
+  era: [60s, 70s, contemporary]
+constraints:
+  do:
+    - "Use multiply blend when overlaying engraving lines on color fields."
+    - "Colorize with palette tint while preserving ink line quality."
+    - "Source from Biodiversity Heritage Library for high-resolution scans."
+  avoid:
+    - "Upscaling engravings more than 2x — line quality degrades quickly."
+    - "JPEG compression on fine line illustrations — creates heavy artifacts."
+compat:
+  works_with:
+    - psc.style.surreal_photomontage.v1
+    - psc.style.occult_mandala_collage.v1
+    - psc.palette.vintage_duotone.v1
+    - psc.technique.cutout_layering.v1
+outputs:
+  - kind: prompt_fragment
+    value: "Victorian botanical engraving, fine line illustration, vintage flora, black ink on aged paper"
+provenance:
+  sources:
+    - kind: url
+      value: "https://www.biodiversitylibrary.org/"
+version: 1
+created_at: "2026-04-10"

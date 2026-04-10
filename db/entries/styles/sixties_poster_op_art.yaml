@@ -1,0 +1,59 @@
+id: psc.style.sixties_poster_op_art.v1
+type: style
+name: 1960s Psychedelic Poster / Op-Art
+aliases: [60s_poster, acid_poster, concert_handbill, wes_wilson, op_art]
+summary: "Vibrating complementary colors, organic letterforms, and hallucinatory optical patterns from the 1960s."
+description: |
+  Emerging from San Francisco's Haight-Ashbury scene (1966–1969) and the British
+  underground press, this style pushed commercial printing to its perceptual limits.
+  Wes Wilson, Victor Moscoso, and Rick Griffin established conventions still imitated
+  today: complementary colors placed side-by-side to produce visual vibration, organic
+  "melting" letterforms derived from Vienna Secession and Art Nouveau, and dense
+  figure/ground reversal that makes text nearly unreadable until eyes adjust.
+
+  Op-art influence (Bridget Riley, Victor Vasarely) adds geometric moiré, pulsing
+  concentric shapes, and checkerboard fields that appear to move or bulge.
+
+  Key signatures: hot complementary pairs (orange/blue, magenta/green, red/cyan),
+  radially symmetric layouts, concert/event format (info at bottom), and heavily
+  outlined portrait imagery floating in acid color fields.
+tags:
+  medium: [analog, hybrid]
+  source: [illustration, photo]
+  cut_edge: [scissor, mask_soft]
+  print: [screenprint, offset]
+  color: [neon, acid]
+  texture: [ink_bleed]
+  distortion: [warp]
+  composition: [centered, maximalist]
+  typography: [psychedelic_poster, warped]
+  mood: [euphoric, mystical, chaotic]
+  era: [60s]
+  subject: [portrait, cosmic, abstract]
+constraints:
+  do:
+    - "Use complementary color pairs at full saturation to maximize optical vibration."
+    - "Allow letterforms to stretch, melt, and fill irregular negative space."
+    - "Outline all major elements with a contrasting color to prevent bleed."
+    - "Limit to 4–6 flat screenprint colors for authenticity."
+  avoid:
+    - "Photorealistic gradients — flat color separations only."
+    - "Clean geometric sans-serif type — everything should feel organic and flowing."
+    - "Large areas of neutral grey or unsaturated color."
+compat:
+  works_with:
+    - psc.palette.acid_vibration.v1
+    - psc.typography.psychedelic_poster_lettering.v1
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.print_artifact.screenprint_separation.v1
+outputs:
+  - kind: prompt_fragment
+    value: "1960s psychedelic concert poster, complementary colors, op-art, organic lettering, screenprint, vibrating hues"
+  - kind: shader_hint
+    value: "posterize to 4 levels, saturate +80%, map to complementary pair palette, add halftone dot overlay"
+provenance:
+  sources:
+    - kind: note
+      value: "Inspired by Family Dog and Bill Graham Presents poster archives"
+version: 1
+created_at: "2026-04-10"

@@ -1,0 +1,107 @@
+# db/_schema/tagsets.yaml
+# Canonical tag axes for the psychedelic collage database.
+# All entries should tag themselves using values from these axes where relevant.
+# You may use multiple values per axis (YAML list).
+# Extend axes freely — add new values here when you add new entries.
+
+medium:
+  - digital       # made or finished entirely in software
+  - analog        # physical media, cut/paste, painting, printing
+  - hybrid        # combines physical + digital steps
+
+source:
+  - magazine      # clippings from print magazines / ads
+  - photo         # photographic imagery (film or digital)
+  - illustration  # hand-drawn or inked art
+  - scan          # flatbed or phone scans of physical objects
+  - AI_gen        # generative AI imagery (diffusion, GAN, etc.)
+  - public_domain # copyright-free archival images
+
+cut_edge:
+  - scissor       # clean, geometric cut lines
+  - torn          # rough organic torn-paper edges
+  - mask_soft     # feathered / soft-edge mask
+  - sticker       # hard graphic edge, sometimes with visible sticker border
+
+print:
+  - halftone      # dot-screen or line-screen halftone
+  - newsprint     # low-res, high-contrast newsprint reproduction
+  - risograph     # risograph/riso color separation aesthetic
+  - xerox         # photocopier artifacts — streak, grain, compression
+  - screenprint   # flat color separations, limited ink passes
+  - offset        # commercial offset printing, CMYK overprint
+
+color:
+  - neon          # saturated fluorescent hues
+  - acid          # over-saturated, clashing, eye-searing combos
+  - pastel        # soft, low-saturation palette
+  - monochrome    # single hue + neutrals
+  - CMYK          # explicit cyan/magenta/yellow/key separation aesthetic
+  - duotone       # two-color tinted image
+  - earth         # warm ochres, umbers, brick reds
+
+texture:
+  - paper_grain   # paper fibre / laid texture
+  - film_grain    # photographic grain / noise
+  - dust          # dust particles and speckles
+  - scratches     # scratch lines across image surface
+  - ink_bleed     # ink spreading into paper
+  - glue          # glue residue / gel medium texture
+  - tape          # clear or masking tape visible on surface
+
+distortion:
+  - warp          # mesh/puppet warp of image content
+  - liquify       # smear / push distortion
+  - kaleidoscope  # mirror-tile symmetry
+  - feedback      # video feedback loop patterns
+  - lens          # lens distortion (barrel / fisheye)
+  - smear         # motion-blur / smear artifact
+
+composition:
+  - maximalist    # dense, every corner filled
+  - centered      # dominant focal element centered
+  - border_clutter # edges packed, clear center
+  - grid_break    # starts grid-based then deliberately breaks it
+  - collage_stack # visible layering / depth of stacked elements
+
+typography:
+  - ransom_note   # mismatched cut letters from different sources
+  - warped        # type distorted with warp, inflate, or liquify
+  - handlettered  # drawn / painted letterforms
+  - psychedelic_poster # flowing organic art nouveau–influenced display type
+  - stencil       # spray-stencil cut-out letterforms
+
+mood:
+  - euphoric      # joyful, uplifting, celebratory
+  - uncanny       # unsettling, dreamlike, off
+  - chaotic       # overwhelming, energetic, cacophony
+  - mystical      # spiritual, transcendent, cosmic
+  - dreamy        # soft, hazy, dissociative
+  - aggressive    # confrontational, loud, in-your-face
+
+era:
+  - 60s           # 1960s psychedelic poster / flower power
+  - 70s           # 1970s underground comix / punk precursor
+  - 90s_rave      # 1990s rave flyer / early digital collage
+  - contemporary  # current / post-internet collage aesthetic
+
+subject:
+  - portrait      # human face / figure
+  - nature        # botanical, animal, landscape
+  - cosmic        # space, stars, nebulae, celestial
+  - occult        # esoteric symbols, tarot, sigils
+  - architecture  # buildings, structures, urban
+  - abstract      # non-representational forms
+
+shader_ops:
+  - posterize          # reduce tonal levels
+  - quantize           # palette-map to fixed color set
+  - halftone           # screen-dot or line-pattern overlay
+  - dither             # ordered or diffusion dither
+  - chromatic_aberration # RGB channel split / fringe
+  - displacement       # UV offset / mesh warp
+  - edge_detect        # find edges (Sobel, Laplacian)
+  - feedback_loop      # previous-frame read-back accumulation
+  - color_grade        # LUT / curves color grading pass
+  - vignette           # darken edges
+  - noise_overlay      # add grain / noise in screen space

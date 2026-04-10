@@ -1,0 +1,59 @@
+id: psc.style.cyberdelic_neon.v1
+type: style
+name: Cyberdelic Neon
+aliases: [cyberdelic, vapor_collage, neon_psychedelic, digital_acid]
+summary: "Neon-drenched digital collage where cyberpunk and psychedelic aesthetics fuse."
+description: |
+  Cyberdelic collage marries the neon palette of 1980s–90s cyberpunk (bladerunner,
+  rave visuals, early CG) with psychedelic composition and surrealist imagery.
+  Characteristics: deep black backgrounds, electric glow outlines, chromatic aberration,
+  lens flares, iridescent gradients, and organic forms (crystals, fungi, anatomy)
+  juxtaposed with grid geometry and glowing circuitry.
+
+  The aesthetic embraces digital production artifacts: scanlines, CRT bloom, JPEG
+  compression ghosts, and VHS signal noise are treated as texture, not flaws.
+  Subjects often include cosmic imagery, AI-generated hybrid creatures, and sacred
+  geometry overlaid on circuit diagrams.
+
+  Shader workflow: dark base, additive glow, chromatic aberration pass, scanline
+  overlay, color grade toward cyan/magenta, final lens flare elements.
+tags:
+  medium: [digital, hybrid]
+  source: [AI_gen, photo, illustration]
+  cut_edge: [mask_soft, sticker]
+  print: [halftone, screenprint]
+  color: [neon, acid, duotone]
+  texture: [film_grain, scratches]
+  distortion: [chromatic_aberration, lens, warp]
+  composition: [centered, maximalist]
+  mood: [euphoric, mystical, chaotic]
+  era: [90s_rave, contemporary]
+  subject: [cosmic, occult, abstract, portrait]
+  shader_ops: [chromatic_aberration, noise_overlay, vignette, color_grade]
+constraints:
+  do:
+    - "Use deep black or near-black backgrounds to maximize neon contrast."
+    - "Apply additive glow to bright elements (screen blend mode)."
+    - "Include at least one chromatic aberration pass for digital acid quality."
+    - "Mix organic and geometric forms — biology meets technology."
+  avoid:
+    - "Bright white or light backgrounds — kills the neon effect."
+    - "Purely photorealistic rendering — the cyberdelic filter must be present."
+    - "Clean flat color without glow or bloom."
+compat:
+  works_with:
+    - psc.palette.cyberdelic_neon.v1
+    - psc.shader.chromatic_aberration.v1
+    - psc.shader.halftone_screen.v1
+    - psc.technique.ai_to_collage_constraints.v1
+outputs:
+  - kind: prompt_fragment
+    value: "cyberdelic neon collage, dark background, electric glow, chromatic aberration, cosmic, rave aesthetic"
+  - kind: shader_hint
+    value: "dark base + additive glow + RGB channel split + scanline overlay + cyan/magenta grade"
+provenance:
+  sources:
+    - kind: note
+      value: "Inspired by rave flyer design, Blade Runner, and post-internet acid aesthetics"
+version: 1
+created_at: "2026-04-10"

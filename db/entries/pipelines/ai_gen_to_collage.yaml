@@ -1,0 +1,72 @@
+id: psc.pipeline.ai_gen_to_collage.v1
+type: pipeline
+name: AI Gen → Cutout → Print Artifact → Halftone → Color Grade
+aliases: [ai_to_collage_pipeline, diffusion_to_print]
+summary: "Full pipeline from AI-generated imagery through collage integration to final print-artifact finish."
+description: |
+  The canonical workflow for integrating AI-generated images into a psychedelic
+  collage aesthetic. Takes raw AI output (typically smooth and photorealistic)
+  and progressively applies print artifact layers to integrate it into the collage
+  visual language.
+
+  Steps:
+  1. Generate base imagery with collage-aware prompts (isolated subject, print medium adjectives).
+  2. Remove background / extract subject with mask.
+  3. Apply edge cleanup on mask.
+  4. Place into collage layer stack with shadow.
+  5. Apply halftone pass to desaturate and print-ify.
+  6. Apply paper grain overlay.
+  7. Color grade to target palette.
+  8. Apply CMYK misregistration pass for print feel.
+tags:
+  medium: [digital, hybrid]
+  source: [AI_gen]
+  print: [halftone, offset]
+  texture: [paper_grain, ink_bleed]
+  mood: [chaotic, euphoric, dreamy]
+  era: [contemporary]
+inputs:
+  - kind: image
+    notes: "AI-generated image (Stable Diffusion, Midjourney, Flux, DALL-E, etc.)"
+steps:
+  - use: psc.technique.ai_to_collage_constraints.v1
+    notes: "Prompt engineering and pre-processing guidance for AI source"
+  - use: psc.technique.masking_and_isolation.v1
+    params:
+      mask_type: ai_segment
+      edge_erosion_px: 2.0
+    notes: "Extract subject, erode mask to remove AI halo"
+  - use: psc.technique.cutout_layering.v1
+    params:
+      shadow_opacity: 0.4
+      shadow_offset_px: 5.0
+    notes: "Place into collage stack with physical shadow"
+  - use: psc.print_artifact.halftone_screen.v1
+    params:
+      frequency: 55.0
+      angle_deg: 45.0
+    notes: "Apply halftone pass to reduce AI smoothness"
+  - use: psc.shader.paper_grain_overlay.v1
+    params:
+      grain_intensity: 0.3
+      blend_mode: soft_light
+    notes: "Add paper grain for physical texture"
+  - use: psc.print_artifact.cmyk_misregistration.v1
+    params:
+      cyan_offset_x: 2.5
+      magenta_offset_x: -1.5
+    notes: "Subtle color fringing for print authenticity"
+outputs:
+  - kind: image
+    notes: "Collage-integrated, print-artifact treated composite"
+compat:
+  works_with:
+    - psc.style.analog_zine_xerox.v1
+    - psc.style.surreal_photomontage.v1
+    - psc.palette.vintage_duotone.v1
+provenance:
+  sources:
+    - kind: note
+      value: "Core AI-to-print collage pipeline for psychedelic_collage workflow"
+version: 1
+created_at: "2026-04-10"

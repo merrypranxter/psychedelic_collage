@@ -1,0 +1,74 @@
+id: psc.print_artifact.photocopy_noise.v1
+type: print_artifact
+name: Photocopy Noise / Xerox Artifact
+aliases: [xerox_noise, photocopy_grain, copy_artifacts, xerox_streak]
+summary: "Tonal compression, streak artifacts, and grain patterns introduced by photocopier reproduction."
+description: |
+  Photocopiers introduce characteristic artifacts that define the zine aesthetic:
+  tonal compression (mid-greys snap to near-black or near-white), electrostatic
+  grain (small random dark speckles over the entire field), streak marks from
+  platen glass contamination, edge ghosting from slightly lifted pages, and
+  progressive generation degradation (each copy of a copy adds more artifacts).
+
+  These artifacts collapse fine detail, which counterintuitively strengthens
+  graphic impact — complex photographic images become high-contrast graphic images.
+
+  Multi-generation simulation: apply xerox pass (threshold + grain + streak) then
+  re-apply it 2–4 times to simulate iterative copying.
+tags:
+  print: [xerox, newsprint]
+  texture: [film_grain, dust, scratches, paper_grain]
+  color: [monochrome]
+  mood: [chaotic, aggressive]
+  era: [70s, 90s_rave]
+  shader_ops: [posterize, noise_overlay, dither]
+parameters:
+  - name: threshold
+    type: float
+    default: 0.5
+    range: [0.3, 0.8]
+    description: "Luminance threshold for B&W snap. Higher = more dark areas."
+  - name: grain_amount
+    type: float
+    default: 0.15
+    range: [0.0, 0.5]
+    description: "Density of electrostatic grain speckles."
+  - name: streak_density
+    type: float
+    default: 0.03
+    range: [0.0, 0.2]
+    description: "Density of vertical/horizontal streak lines."
+  - name: streak_direction
+    type: enum
+    options: [horizontal, vertical, both]
+    default: vertical
+  - name: generation_passes
+    type: int
+    default: 1
+    range: [1, 6]
+    description: "Number of sequential xerox passes to simulate copy-of-copy degradation."
+constraints:
+  do:
+    - "Apply threshold before grain for most authentic result."
+    - "Add streak displacement on streak lines (they are not perfectly straight)."
+    - "Increase grain_amount with each generation pass."
+  avoid:
+    - "Applying to color images without converting to greyscale first."
+    - "Using too few generation passes — single pass looks too clean."
+compat:
+  works_with:
+    - psc.style.analog_zine_xerox.v1
+    - psc.technique.ai_to_collage_constraints.v1
+    - psc.shader.paper_grain_overlay.v1
+    - psc.print_artifact.halftone_screen.v1
+outputs:
+  - kind: shader_hint
+    value: "greyscale → threshold → add grain speckles → add streak lines → repeat N times"
+  - kind: prompt_fragment
+    value: "xerox photocopy noise, zine grain, black and white copy artifact, electrostatic grain"
+provenance:
+  sources:
+    - kind: note
+      value: "Classic photocopier aesthetic from DIY zine and punk flyer culture"
+version: 1
+created_at: "2026-04-10"

@@ -1,0 +1,60 @@
+id: psc.style.occult_mandala_collage.v1
+type: style
+name: Occult Mandala Collage
+aliases: [occult_collage, sacred_geometry_collage, esoteric_collage, mandala_art]
+summary: "Radially symmetric collage built around esoteric symbols, sacred geometry, and mystical imagery."
+description: |
+  Fuses the precision of sacred geometry (Flower of Life, Metatron's Cube, Sri Yantra)
+  with collage's chaotic layering. Botanical engravings, anatomical diagrams, tarot
+  imagery, alchemical symbols, and celestial charts are arranged in radial symmetry,
+  then collaged over mandala grid guides.
+
+  Color tends toward rich jewel tones (deep violet, cobalt, gold leaf) or, in the
+  digital version, iridescent and metallic gradients. Heavy use of overprint and
+  multiply blend modes to create stained-glass depth.
+
+  Typography, when present, follows circular baselines or uses archaic scripts
+  (runic, alchemical, faux-Latin).
+
+  Shader implementation often pairs a kaleidoscope symmetry operation with
+  multiply-blended texture layers, gold/iridescent color grading, and soft vignette.
+tags:
+  medium: [analog, digital, hybrid]
+  source: [public_domain, illustration, scan, AI_gen]
+  cut_edge: [mask_soft, scissor]
+  print: [screenprint, offset, risograph]
+  color: [neon, acid, earth]
+  texture: [paper_grain, ink_bleed, glue]
+  distortion: [kaleidoscope, warp]
+  composition: [centered, maximalist]
+  typography: [psychedelic_poster, handlettered]
+  mood: [mystical, dreamy, euphoric]
+  era: [60s, contemporary]
+  subject: [occult, cosmic, nature, abstract]
+  shader_ops: [kaleidoscope, displacement, color_grade]
+constraints:
+  do:
+    - "Establish a clear radial axis before adding collage elements."
+    - "Use multiply or screen blend modes to build stained-glass depth."
+    - "Incorporate at least one geometric framework (grid, circle, triangle)."
+    - "Let image elements 'grow out of' or 'into' the geometry."
+  avoid:
+    - "Asymmetric layouts unless intentionally breaking the mandala form."
+    - "Bright flat backgrounds — jewel tone or dark ground reads as more mystical."
+compat:
+  works_with:
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.palette.occult_jewel.v1
+    - psc.shader.displacement_warp.v1
+    - psc.motif.sacred_geometry_grid.v1
+outputs:
+  - kind: prompt_fragment
+    value: "occult mandala collage, sacred geometry, esoteric symbols, radial symmetry, jewel tones, mystical"
+  - kind: shader_hint
+    value: "kaleidoscope tile + multiply blend + iridescent grade + radial vignette"
+provenance:
+  sources:
+    - kind: note
+      value: "Inspired by Victorian engraving archives, tarot card illustration, and hermetic art"
+version: 1
+created_at: "2026-04-10"

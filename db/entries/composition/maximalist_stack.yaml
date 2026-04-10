@@ -1,0 +1,49 @@
+id: psc.composition.maximalist_stack.v1
+type: composition
+name: Maximalist Stack Composition
+aliases: [dense_collage, maximalist_layout, horror_vacui, all_over_composition]
+summary: "Horror vacui compositional strategy — every surface covered, no breathing room, dense layering."
+description: |
+  The maximalist collage principle: fill every part of the frame. Inspired by
+  Victorian pattern design (William Morris, Owen Jones), Outsider Art, and zine
+  culture. The effect is overwhelming, energetic, and immersive — the eye cannot
+  rest and must explore endlessly.
+
+  Organizational strategies that prevent maximalist compositions from being purely
+  chaotic:
+  - **Value grouping**: arrange elements so overall value pattern (dark/light) forms
+    a coherent shape, even if individual elements are chaotic.
+  - **Color zoning**: keep color temperature consistent in regions (warm zone,
+    cool zone) even if content varies.
+  - **Scale hierarchy**: one largest element establishes dominant scale; everything
+    else smaller. Prevents visual chaos from feeling equally random.
+  - **Directional flow**: implied movement direction (diagonal, spiral) carries
+    eye across dense composition.
+tags:
+  composition: [maximalist, border_clutter, collage_stack]
+  mood: [chaotic, euphoric, aggressive]
+  era: [70s, 90s_rave, contemporary]
+  subject: [abstract, portrait, nature]
+constraints:
+  do:
+    - "Establish value grouping before filling in detail."
+    - "Use one large anchor element to establish scale hierarchy."
+    - "Create implied directional movement (e.g., left-to-right diagonal flow)."
+  avoid:
+    - "Equal-size elements filling frame uniformly — creates flat wallpaper texture."
+    - "More than 3 competing color zones — causes visual incoherence."
+compat:
+  works_with:
+    - psc.style.analog_zine_xerox.v1
+    - psc.style.sixties_poster_op_art.v1
+    - psc.technique.cutout_layering.v1
+    - psc.typography.ransom_note.v1
+outputs:
+  - kind: prompt_fragment
+    value: "maximalist collage, horror vacui, dense layered composition, every space filled"
+provenance:
+  sources:
+    - kind: note
+      value: "Horror vacui compositional principle for dense collage design"
+version: 1
+created_at: "2026-04-10"

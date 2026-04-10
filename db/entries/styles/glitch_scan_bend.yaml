@@ -1,0 +1,80 @@
+id: psc.style.glitch_scan_bend.v1
+type: style
+name: Glitch / Scan-Bend Collage
+aliases: [glitch_art, scan_bend, databend_collage, circuit_bend_visual]
+summary: "Deliberate data corruption and scanning artifacts weaponized as aesthetic elements."
+description: |
+  Glitch/scan-bend collage treats technological failure as authorship. Techniques
+  include: databending (opening image files in a hex or audio editor and corrupting
+  bytes), scanning physical objects at extreme angles or while moving the platen,
+  JPEG mosquito noise at extreme compression, CRT interference patterns, and
+  interlace artifacts from analog video capture.
+
+  Visually: horizontal streak bursts, color channel desync, pixel sorting columns,
+  scanline dropout, checkerboard alpha errors, and sudden color block intrusions.
+  These are composited with conventional collage elements for maximum tension
+  between "clean" and "broken."
+
+  In shader/JS: pixel sort (sort columns by luminance), RGB shift with varying
+  offsets per scanline, noise-driven UV displacement, interlace blend, and random
+  block copy/paste operations.
+tags:
+  medium: [digital, hybrid]
+  source: [scan, photo, AI_gen]
+  cut_edge: [mask_soft, torn]
+  print: [xerox, newsprint]
+  color: [neon, acid, monochrome]
+  texture: [film_grain, scratches, dust]
+  distortion: [warp, displacement, smear, feedback]
+  composition: [collage_stack, grid_break, maximalist]
+  mood: [chaotic, aggressive, uncanny]
+  era: [90s_rave, contemporary]
+  subject: [portrait, abstract, architecture]
+  shader_ops: [chromatic_aberration, displacement, edge_detect, noise_overlay]
+parameters:
+  - name: pixel_sort_threshold
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "Luminance threshold above which pixels are sorted."
+  - name: rgb_shift_amount
+    type: float
+    default: 8.0
+    range: [0.0, 64.0]
+    description: "Maximum pixel offset for RGB channel separation."
+  - name: scanline_dropout_rate
+    type: float
+    default: 0.05
+    range: [0.0, 0.5]
+    description: "Fraction of scanlines randomly dropped to black."
+  - name: block_corruption_density
+    type: float
+    default: 0.03
+    range: [0.0, 0.3]
+    description: "Density of random block corruption events."
+constraints:
+  do:
+    - "Vary glitch intensity — isolated bursts feel more authentic than uniform corruption."
+    - "Use pixel sorting on vertical columns for maximum impact."
+    - "Composite glitch elements over clean imagery for maximum contrast."
+    - "Vary RGB shift amount per row for analog-video feel."
+  avoid:
+    - "Uniform, perfectly tiled glitch patterns — feel too decorative."
+    - "Applying glitch to the entire frame — preserve some 'clean' anchors."
+compat:
+  works_with:
+    - psc.shader.chromatic_aberration.v1
+    - psc.shader.displacement_warp.v1
+    - psc.print_artifact.photocopy_noise.v1
+    - psc.technique.collage_shadow_depth.v1
+outputs:
+  - kind: prompt_fragment
+    value: "glitch art collage, databend, pixel sort, scan artifacts, chromatic aberration, digital corruption"
+  - kind: shader_hint
+    value: "per-row RGB offset + column pixel sort + scanline dropout + block copy corruption"
+provenance:
+  sources:
+    - kind: note
+      value: "References: Rosa Menkman, Kim Asendorf, Takeshi Murata"
+version: 1
+created_at: "2026-04-10"

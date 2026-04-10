@@ -1,0 +1,83 @@
+id: psc.shader.edge_cutout.v1
+type: shader
+name: Edge Cutout / Graphic Outline Shader
+aliases: [edge_detect, outline_shader, cutout_edge, sobel_outline]
+summary: "GLSL shader detecting edges in source imagery to produce graphic cutout outlines or hard-edge masks."
+description: |
+  Edge detection finds boundaries between distinct color/luminance regions in an
+  image and renders them as lines or boundaries. In collage context, this turns
+  photographic imagery into graphic line-art — essential for the "printed sticker"
+  and "graphic cut" aesthetics.
+
+  Techniques:
+  - **Sobel operator**: standard luminance gradient edge detection. Clean lines.
+  - **Laplacian of Gaussian (LoG)**: sharper, noisier edges. More hand-drawn.
+  - **Color difference edges**: detect boundaries by color change rather than luma only.
+    Better for collage with low-contrast areas.
+  - **Quantize-then-edge**: posterize first, then detect color boundary edges.
+    Creates a cel-shaded / screenprint graphic outline.
+
+  Output uses: render as opaque black line over composition (sticker outline),
+  use as alpha mask (cutout the edge region), or blend for graphic graphic effect.
+tags:
+  cut_edge: [sticker, scissor]
+  shader_ops: [edge_detect, posterize, quantize]
+  mood: [aggressive, chaotic]
+  era: [60s, contemporary]
+parameters:
+  - name: method
+    type: enum
+    options: [sobel, laplacian, color_diff, quantize_then_edge]
+    default: sobel
+  - name: threshold
+    type: float
+    default: 0.3
+    range: [0.0, 1.0]
+    description: "Edge strength threshold — lower reveals more edges."
+  - name: line_width
+    type: float
+    default: 1.5
+    range: [0.5, 8.0]
+    description: "Approximate rendered line width in pixels."
+  - name: posterize_levels
+    type: int
+    default: 4
+    range: [2, 12]
+    description: "Posterization levels for quantize_then_edge method."
+constraints:
+  do:
+    - "Use quantize_then_edge for poster/screenprint graphic outline style."
+    - "Use sobel for fine photographic edge detection."
+    - "Composite edges as separate layer (allows color/blend control)."
+  avoid:
+    - "Applying edge shader on heavy-noise images without pre-smoothing."
+    - "Threshold below 0.1 — produces too much noise edge."
+compat:
+  works_with:
+    - psc.print_artifact.screenprint_separation.v1
+    - psc.technique.cutout_layering.v1
+    - psc.technique.masking_and_isolation.v1
+    - psc.shader.halftone_screen.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL Sobel edge detection (on luma)
+      float sobel(sampler2D tex, vec2 uv, vec2 texel) {
+        float tl = dot(texture(tex, uv + vec2(-texel.x, texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float tc = dot(texture(tex, uv + vec2(0.0,    texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float tr = dot(texture(tex, uv + vec2( texel.x, texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float ml = dot(texture(tex, uv + vec2(-texel.x, 0.0   )).rgb, vec3(0.299,0.587,0.114));
+        float mr = dot(texture(tex, uv + vec2( texel.x, 0.0   )).rgb, vec3(0.299,0.587,0.114));
+        float bl = dot(texture(tex, uv + vec2(-texel.x,-texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float bc = dot(texture(tex, uv + vec2( 0.0,   -texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float br = dot(texture(tex, uv + vec2( texel.x,-texel.y)).rgb, vec3(0.299,0.587,0.114));
+        float gx = -tl - 2.0*ml - bl + tr + 2.0*mr + br;
+        float gy = -tl - 2.0*tc - tr + bl + 2.0*bc + br;
+        return sqrt(gx*gx + gy*gy);
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "Sobel and Laplacian edge detection — standard GLSL image processing"
+version: 1
+created_at: "2026-04-10"

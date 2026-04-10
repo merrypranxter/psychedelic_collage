@@ -1,0 +1,68 @@
+id: psc.palette.occult_jewel.v1
+type: palette
+name: Occult Jewel Tones
+aliases: [jewel_tones, esoteric_palette, hermetic_colors, mystical_palette]
+summary: "Rich, saturated jewel tones evoking stained glass, alchemical illumination, and occult manuscript."
+description: |
+  Based on the color language of medieval manuscript illumination, stained glass
+  windows, and alchemical symbolism. Deep saturated primaries punctuated by metallic
+  gold and silver, with dark near-black base that allows jewel colors to luminously float.
+
+  Gold (#C9A84C) is the most important color — used for borders, glyphs, and halos.
+  Deep violet and cobalt are the dominant field colors. Ruby red and emerald green
+  appear as accent/symbolic markers. The combination evokes tarot cards, grimoires,
+  and occult plate illustrations.
+tags:
+  color: [neon, earth]
+  print: [screenprint, offset]
+  texture: [ink_bleed, paper_grain]
+  mood: [mystical, dreamy, euphoric]
+  era: [60s, contemporary]
+  subject: [occult, cosmic]
+colors:
+  - name: Alchemical Gold
+    hex: "#C9A84C"
+    role: accent_metallic
+  - name: Deep Violet
+    hex: "#3D0070"
+    role: dominant_field
+  - name: Cobalt Royal
+    hex: "#1A3CCC"
+    role: secondary_field
+  - name: Ruby Red
+    hex: "#C0141E"
+    role: symbolic_accent
+  - name: Emerald
+    hex: "#007A3D"
+    role: symbolic_accent
+  - name: Midnight Black
+    hex: "#0B0B12"
+    role: background
+  - name: Pale Silver
+    hex: "#C4C8D0"
+    role: metallic_secondary
+  - name: Antique Ivory
+    hex: "#EEE5C8"
+    role: parchment
+constraints:
+  do:
+    - "Use Alchemical Gold for all borders, geometric outlines, and text."
+    - "Keep background dark (Midnight Black or Deep Violet) so jewels glow."
+    - "Use multiply blend for ink/woodcut textures over jewel fields."
+  avoid:
+    - "Pastel or desaturated versions of these colors."
+    - "Bright white highlights — use Antique Ivory for warmth."
+compat:
+  works_with:
+    - psc.style.occult_mandala_collage.v1
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.motif.sacred_geometry_grid.v1
+outputs:
+  - kind: prompt_fragment
+    value: "occult jewel tones, alchemical gold, deep violet and cobalt, stained glass, esoteric manuscript"
+provenance:
+  sources:
+    - kind: note
+      value: "Based on medieval illuminated manuscript and tarot card color conventions"
+version: 1
+created_at: "2026-04-10"

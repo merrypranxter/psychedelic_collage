@@ -1,0 +1,61 @@
+id: psc.material.watercolor_paper.v1
+type: material
+name: Watercolor Paper
+aliases: [watercolour_paper, hot_press_paper, cold_press_paper, rough_paper]
+summary: "Heavy-weight watercolor paper as a collage substrate — heavily textured, absorbent, archival."
+description: |
+  Watercolor paper (300gsm, hot-press or cold-press) is a premium collage substrate
+  used when longevity and richness of texture are priorities. The heavy tooth of
+  cold-press paper creates a characteristic roughness that ink, paint, and glued
+  elements interact with visually.
+
+  Hot-press (smooth): allows for precise cut element placement, fine detail.
+    Better for: technical illustration-style collage, precise masking.
+  Cold-press (medium texture): most common. Visible paper tooth creates texture
+    visible through thin transparent elements.
+  Rough: most textured. The texture dominates. Good for painterly collage.
+
+  As a digital texture layer: scan at 1200 DPI for full paper-tooth visibility.
+  Use as overlay at soft-light or overlay blend mode, or as base layer for the
+  entire composition.
+
+  Signature color: slightly warm off-white (#F5F0E8 for hot-press, #EDE8DC for cold-press).
+tags:
+  medium: [analog, hybrid]
+  source: [scan]
+  texture: [paper_grain, glue, ink_bleed]
+  color: [earth]
+  mood: [dreamy, mystical]
+  era: [60s, contemporary]
+parameters:
+  - name: paper_type
+    type: enum
+    options: [hot_press, cold_press, rough]
+    default: cold_press
+  - name: texture_opacity
+    type: float
+    default: 0.4
+    range: [0.0, 1.0]
+    description: "Opacity of paper texture overlay."
+constraints:
+  do:
+    - "Use cold_press texture as default — most versatile."
+    - "Scan at 1200 DPI for full grain visibility at A3 reproduction size."
+    - "Apply at soft_light blend for texture without color shift."
+  avoid:
+    - "High-opacity multiply of watercolor paper over imagery — too heavy."
+compat:
+  works_with:
+    - psc.palette.vintage_duotone.v1
+    - psc.palette.occult_jewel.v1
+    - psc.print_artifact.ink_bleed.v1
+    - psc.technique.texture_sourcing.v1
+outputs:
+  - kind: prompt_fragment
+    value: "watercolor paper texture, cold press paper, heavy tooth paper substrate"
+provenance:
+  sources:
+    - kind: note
+      value: "Watercolor paper properties for digital collage substrate simulation"
+version: 1
+created_at: "2026-04-10"

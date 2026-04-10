@@ -1,0 +1,90 @@
+id: psc.technique.kaleidoscope_pattern.v1
+type: technique
+name: Kaleidoscope / Mirror-Tile Pattern
+aliases: [kaleidoscope, mirror_tile, radial_mirror, symmetry_fold]
+summary: "Generating radially or bilaterally symmetrical pattern fields from source imagery via mirror operations."
+description: |
+  Kaleidoscope tiling takes a source image region and repeatedly mirrors/rotates
+  it around a central point to produce mandala-like radial symmetry. The number
+  of mirror pairs (order) controls complexity: 2-fold = butterfly; 8-fold = classic
+  kaleidoscope; 12-fold = complex floral.
+
+  In GLSL/WebGL: convert fragment UV to polar coordinates, quantize angle into
+  N sectors, mirror-fold within each sector, sample source texture at resulting UV.
+  Animate by rotating the fold angle or zooming the source UV over time.
+
+  Collage application: photograph textured fabric, printed paper, or collage
+  assemblies, then feed through kaleidoscope shader to generate background fields
+  or border decorations. Works especially well with risograph-printed materials
+  or highly textured paper.
+
+  Combines powerfully with feedback loop shaders (each frame feeds the next,
+  causing evolving spiral growth).
+tags:
+  medium: [digital, hybrid]
+  distortion: [kaleidoscope, feedback, warp]
+  composition: [centered, maximalist]
+  mood: [mystical, euphoric, dreamy]
+  era: [60s, contemporary]
+  subject: [abstract, occult, cosmic]
+  shader_ops: [displacement, feedback_loop]
+parameters:
+  - name: fold_count
+    type: int
+    default: 8
+    range: [2, 24]
+    description: "Number of mirror fold pairs (must be even for full symmetry)."
+  - name: rotation_speed
+    type: float
+    default: 0.1
+    range: [0.0, 2.0]
+    description: "Rotation speed of fold angle (radians per second) for animation."
+  - name: zoom
+    type: float
+    default: 1.0
+    range: [0.1, 10.0]
+    description: "UV zoom factor on source texture sample."
+  - name: center_offset_x
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "X center of symmetry fold (normalized UV)."
+  - name: center_offset_y
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "Y center of symmetry fold (normalized UV)."
+constraints:
+  do:
+    - "Use richly textured source images — flat color sources produce boring results."
+    - "Animate rotation slowly for hypnotic effect; fast for energetic pulse."
+    - "Combine with feedback loop to create infinite-zoom mandala growth."
+  avoid:
+    - "Even-numbered fold counts below 4 — not enough symmetry axis."
+    - "Using already-symmetric source images — results are flat."
+compat:
+  works_with:
+    - psc.style.occult_mandala_collage.v1
+    - psc.shader.displacement_warp.v1
+    - psc.pipeline.feedback_loop_kaleidoscope.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL kaleidoscope kernel
+      vec2 kaleidoscope(vec2 uv, float folds) {
+        uv = uv * 2.0 - 1.0;
+        float angle = atan(uv.y, uv.x);
+        float radius = length(uv);
+        float sector = 2.0 * 3.14159 / folds;
+        angle = mod(angle, sector);
+        if (angle > sector * 0.5) angle = sector - angle;
+        return vec2(cos(angle), sin(angle)) * radius * 0.5 + 0.5;
+      }
+  - kind: prompt_fragment
+    value: "kaleidoscope symmetry, radial mirror pattern, mandala tile, psychedelic fractal"
+provenance:
+  sources:
+    - kind: note
+      value: "GLSL polar coordinate UV manipulation technique"
+version: 1
+created_at: "2026-04-10"

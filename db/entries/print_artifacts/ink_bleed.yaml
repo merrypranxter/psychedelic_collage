@@ -1,0 +1,69 @@
+id: psc.print_artifact.ink_bleed.v1
+type: print_artifact
+name: Ink Bleed / Spread
+aliases: [ink_bleed, ink_spread, halation, ink_feather, wet_spread]
+summary: "Ink absorbing into paper fibers and spreading beyond intended boundaries."
+description: |
+  When ink is applied to absorbent paper (newsprint, uncoated stock, cardstock),
+  the liquid vehicle spreads into paper fibers before drying, creating soft or
+  irregular edges on printed elements. The degree depends on ink viscosity,
+  paper absorbency, and pressure.
+
+  In collage aesthetics:
+  - **Gentle bleed**: soft dark halos around fine text or thin lines. Adds age.
+  - **Heavy bleed**: text strokes merging together, dots spreading and merging.
+    Creates the "overinked" newspaper look.
+  - **Wet spread**: ink puddles that spread and feather unpredictably, creating
+    organic stain shapes. Beautiful in risograph contexts.
+
+  Digital simulation: dilate dark areas slightly (morphological expand), then
+  gaussian blur edges, then composite as multiply over paper texture.
+  Or: displacement map the ink boundaries with a low-frequency noise field.
+tags:
+  print: [newsprint, risograph, screenprint, offset]
+  texture: [ink_bleed, paper_grain]
+  color: [monochrome, CMYK]
+  mood: [chaotic, dreamy]
+  era: [60s, 70s]
+  shader_ops: [displacement, noise_overlay]
+parameters:
+  - name: spread_radius_px
+    type: float
+    default: 2.0
+    range: [0.5, 15.0]
+    description: "Pixel radius of ink spread dilation."
+  - name: feather_blur_px
+    type: float
+    default: 1.5
+    range: [0.0, 8.0]
+    description: "Gaussian blur on spread boundary."
+  - name: noise_displacement
+    type: float
+    default: 0.3
+    range: [0.0, 1.0]
+    description: "Amount of noise-driven UV displacement on spread boundary."
+constraints:
+  do:
+    - "Apply to ink/line elements only, not background fields."
+    - "Combine with paper grain texture for most authentic result."
+    - "Use multiply blend when compositing over image content."
+  avoid:
+    - "Applying spread to all layers equally — reserve for line art and type."
+    - "Over-spreading to the point of losing legibility on type."
+compat:
+  works_with:
+    - psc.print_artifact.halftone_screen.v1
+    - psc.material.aged_newsprint.v1
+    - psc.palette.risograph_rainbow.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: shader_hint
+    value: "dilate dark areas → gaussian blur edge → noise displacement on boundary → multiply blend"
+  - kind: prompt_fragment
+    value: "ink bleed newsprint, risograph ink spread, overinked type, wet ink absorption"
+provenance:
+  sources:
+    - kind: note
+      value: "Physical ink absorption artifact from letterpress and riso printing"
+version: 1
+created_at: "2026-04-10"

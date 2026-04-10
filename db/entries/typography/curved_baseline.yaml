@@ -1,0 +1,73 @@
+id: psc.typography.curved_baseline.v1
+type: typography
+name: Curved and Warped Baseline Typography
+aliases: [curved_type, arc_text, path_text, baseline_warp]
+summary: "Type set on curved, sinusoidal, or radial paths — fundamental to psychedelic and poster design."
+description: |
+  Psychedelic and poster typography rarely uses a horizontal baseline. Text flows
+  on circular arcs (around image elements), sinusoidal waves, radial paths on
+  mandala compositions, or free-form brush path curves.
+
+  Types of curved baselines:
+  - **Arc**: constant radius curve. Common for badge/seal typography.
+  - **Sinusoidal wave**: text undulates up and down. 1960s poster energy.
+  - **Radial/spiral**: text wraps around circular central element.
+  - **Free path**: text follows a hand-drawn bezier — most expressive.
+  - **Perspective warp**: text on a flat plane tilted in perspective space.
+
+  In JS/canvas/SVG: use `textPath` on SVG, or manually position/rotate each
+  character along a bezier curve (compute tangent at each character position).
+  In GLSL: apply UV warp based on sine function before sampling type texture.
+tags:
+  typography: [psychedelic_poster, warped, handlettered]
+  composition: [centered, maximalist]
+  distortion: [warp]
+  mood: [euphoric, mystical, dreamy]
+  era: [60s, contemporary]
+parameters:
+  - name: curve_type
+    type: enum
+    options: [arc, sine_wave, radial, free_path, perspective_tilt]
+    default: arc
+  - name: arc_radius_px
+    type: float
+    default: 300.0
+    range: [50.0, 2000.0]
+    description: "Radius for arc baseline (pixels)."
+  - name: sine_amplitude_px
+    type: float
+    default: 30.0
+    range: [0.0, 200.0]
+    description: "Peak amplitude for sinusoidal baseline."
+  - name: sine_frequency
+    type: float
+    default: 0.5
+    range: [0.1, 3.0]
+    description: "Frequency of sine wave per em of text width."
+constraints:
+  do:
+    - "Adjust character spacing (kerning) to account for path curvature."
+    - "Rotate each character to align with path tangent direction."
+    - "Use with psychedelic poster lettering for maximum 1960s effect."
+  avoid:
+    - "Extremely tight sine frequency — becomes unreadable quickly."
+    - "Perspective tilt without establishing a visual ground plane."
+compat:
+  works_with:
+    - psc.typography.psychedelic_poster_lettering.v1
+    - psc.style.sixties_poster_op_art.v1
+    - psc.composition.radial_centered.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // SVG curved text path
+      // <path id="arcPath" d="M 50,200 A 150,150 0 0,1 350,200" fill="none"/>
+      // <text><textPath href="#arcPath">PSYCHEDELIC TEXT</textPath></text>
+  - kind: prompt_fragment
+    value: "text on curved arc, circular baseline typography, text follows path, poster lettering arc"
+provenance:
+  sources:
+    - kind: note
+      value: "SVG textPath and canvas path-following type techniques"
+version: 1
+created_at: "2026-04-10"
