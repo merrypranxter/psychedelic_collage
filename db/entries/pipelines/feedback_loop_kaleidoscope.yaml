@@ -1,0 +1,74 @@
+id: psc.pipeline.feedback_loop_kaleidoscope.v1
+type: pipeline
+name: Feedback Loop Kaleidoscope
+aliases: [feedback_kaleidoscope, infinite_mirror_loop, fractal_feedback]
+summary: "Real-time feedback loop shader pipeline feeding previous frame output back through kaleidoscope warp."
+description: |
+  A real-time generative pipeline where each rendered frame is fed back as the
+  input texture for the next frame, producing evolving, self-similar psychedelic
+  patterns. The kaleidoscope fold creates rotational symmetry, and the displacement
+  warp keeps content in motion. Zoom and rotate parameters cause infinite apparent
+  growth into fractal depth.
+
+  This pipeline requires a two-buffer (ping-pong) framebuffer setup:
+  - Buffer A (current): read as input texture.
+  - Buffer B (next): write output.
+  - Swap buffers each frame.
+
+  Starting condition: inject a source image or noise field into Buffer A,
+  then let the loop run until patterns stabilize. Occasional source injection
+  keeps patterns from becoming uniformly static.
+tags:
+  medium: [digital]
+  distortion: [kaleidoscope, feedback, warp]
+  composition: [centered, maximalist]
+  mood: [euphoric, mystical, dreamy, chaotic]
+  era: [contemporary]
+  shader_ops: [displacement, feedback_loop]
+inputs:
+  - kind: image
+    notes: "Seed image or noise texture for first frame initialization"
+steps:
+  - use: psc.technique.kaleidoscope_pattern.v1
+    params:
+      fold_count: 8
+      rotation_speed: 0.08
+    notes: "Mirror-fold current frame content"
+  - use: psc.shader.displacement_warp.v1
+    params:
+      displacement_source: simplex_noise
+      intensity: 0.015
+      time_speed: 0.4
+    notes: "Slow organic displacement to prevent static patterns"
+  - use: psc.shader.chromatic_aberration.v1
+    params:
+      mode: radial
+      intensity: 0.004
+    notes: "Subtle color fringing to build color complexity over time"
+  - use: psc.technique.compositing_modes.v1
+    params:
+      blend_mode: screen
+      layer_opacity: 0.97
+    notes: "Near-unity blend for trail accumulation (0.97 = slight fade)"
+outputs:
+  - kind: image
+    notes: "Evolving real-time kaleidoscope mandala (render to canvas or video)"
+constraints:
+  do:
+    - "Keep blend_opacity below 1.0 (0.95–0.98 range) to allow pattern decay."
+    - "Inject source texture occasionally to prevent full divergence."
+    - "Use ping-pong framebuffers — single buffer creates driver artifacts."
+  avoid:
+    - "Blend opacity at exactly 1.0 — patterns freeze or diverge immediately."
+    - "Too fast rotation_speed — patterns become unreadable blur."
+compat:
+  works_with:
+    - psc.style.occult_mandala_collage.v1
+    - psc.palette.cyberdelic_neon.v1
+    - psc.palette.acid_vibration.v1
+provenance:
+  sources:
+    - kind: note
+      value: "Video feedback loop technique in WebGL using ping-pong framebuffers"
+version: 1
+created_at: "2026-04-10"

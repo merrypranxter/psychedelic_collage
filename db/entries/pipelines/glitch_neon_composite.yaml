@@ -1,0 +1,66 @@
+id: psc.pipeline.glitch_neon_composite.v1
+type: pipeline
+name: Glitch Neon Composite
+aliases: [glitch_neon_pipeline, cyberdelic_glitch, neon_databend]
+summary: "Composite pipeline layering glitch artifacts over neon cyberdelic collage for chaotic digital acid aesthetic."
+description: |
+  Combines the dark neon foundation of cyberdelic collage with glitch scan-bend
+  artifacts layered on top. The pipeline builds from dark base through glowing
+  neon composite, then fractures the result with pixel sort, RGB shift, and
+  chromatic aberration.
+tags:
+  medium: [digital]
+  source: [AI_gen, scan, photo]
+  print: [halftone]
+  color: [neon, acid]
+  distortion: [warp, displacement, smear, feedback]
+  mood: [chaotic, aggressive, euphoric, uncanny]
+  era: [90s_rave, contemporary]
+  shader_ops: [chromatic_aberration, displacement, noise_overlay, color_grade]
+inputs:
+  - kind: image
+    notes: "Source imagery (AI gen or photo) — dark or mid-tone subjects work best"
+steps:
+  - use: psc.technique.masking_and_isolation.v1
+    params:
+      mask_type: ai_segment
+    notes: "Extract subjects for separate glow treatment"
+  - use: psc.technique.compositing_modes.v1
+    params:
+      blend_mode: screen
+      layer_opacity: 0.85
+    notes: "Screen blend isolated elements on dark background for glow effect"
+  - use: psc.shader.chromatic_aberration.v1
+    params:
+      mode: directional
+      intensity: 0.012
+    notes: "Directional RGB shift for scan/glitch artifact"
+  - use: psc.shader.displacement_warp.v1
+    params:
+      displacement_source: simplex_noise
+      intensity: 0.025
+    notes: "Organic warp on background field"
+  - use: psc.shader.paper_grain_overlay.v1
+    params:
+      grain_intensity: 0.35
+      blend_mode: screen
+    notes: "Grain as bright speckle (screen blend = film grain over dark)"
+  - use: psc.print_artifact.cmyk_misregistration.v1
+    params:
+      cyan_offset_x: 5.0
+      magenta_offset_x: -4.0
+    notes: "Strong misregistration for glitch color fringing"
+outputs:
+  - kind: image
+    notes: "Cyberdelic neon glitch composite"
+compat:
+  works_with:
+    - psc.style.cyberdelic_neon.v1
+    - psc.style.glitch_scan_bend.v1
+    - psc.palette.cyberdelic_neon.v1
+provenance:
+  sources:
+    - kind: note
+      value: "Cyberdelic glitch composite pipeline for high-energy digital collage"
+version: 1
+created_at: "2026-04-10"

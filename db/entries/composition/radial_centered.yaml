@@ -1,0 +1,49 @@
+id: psc.composition.radial_centered.v1
+type: composition
+name: Radial Centered Composition
+aliases: [radial_composition, mandala_layout, centered_radial, bullseye_layout]
+summary: "Compositional framework organizing elements around a central focal point in radial symmetry."
+description: |
+  The dominant composition mode for psychedelic poster and occult mandala collage.
+  A strong central element (face, symbol, geometric form) anchors the eye, with
+  concentric rings of supporting elements radiating outward. Typography typically
+  curves around the periphery.
+
+  Layout zones:
+  1. **Core** (center ~15% of frame): primary subject or symbol — most detailed.
+  2. **Inner ring** (~15–40% radius): supporting imagery, secondary symbols.
+  3. **Outer ring** (~40–70% radius): texture, pattern fields, decorative elements.
+  4. **Border zone** (~70–100% radius): typography, framing device, edge decoration.
+
+  Key principle: the eye should spiral inward (or outward) continuously without
+  finding a clean exit. Density increases toward center or toward edge (not both).
+tags:
+  composition: [centered, maximalist]
+  distortion: [kaleidoscope]
+  mood: [mystical, euphoric, dreamy]
+  era: [60s, contemporary]
+  subject: [occult, cosmic, abstract, portrait]
+constraints:
+  do:
+    - "Establish a single dominant center element before adding rings."
+    - "Use curved or circular typography in the border zone."
+    - "Allow inner-ring elements to overlap core slightly for depth."
+  avoid:
+    - "Two competing center elements of equal weight — kills radial clarity."
+    - "Grid-aligned rectangular elements in the inner ring — breaks radial flow."
+compat:
+  works_with:
+    - psc.style.occult_mandala_collage.v1
+    - psc.style.sixties_poster_op_art.v1
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.typography.curved_baseline.v1
+    - psc.motif.sacred_geometry_grid.v1
+outputs:
+  - kind: prompt_fragment
+    value: "radial composition, centered mandala layout, concentric rings, bullseye focal design"
+provenance:
+  sources:
+    - kind: note
+      value: "Core compositional template for psychedelic and occult collage"
+version: 1
+created_at: "2026-04-10"

@@ -1,0 +1,74 @@
+id: psc.shader.chromatic_aberration.v1
+type: shader
+name: Chromatic Aberration Shader
+aliases: [chroma_aberration, rgb_shift, lens_fringe, color_fringe]
+summary: "GLSL shader splitting RGB channels by different UV offsets to simulate lens or scan chromatic fringing."
+description: |
+  Chromatic aberration is a lens optical defect where different wavelengths of
+  light focus at different distances, causing color fringing at high-contrast edges.
+  In analog scanners and CRT displays it appears as red/green/blue ghost images.
+  In psychedelic collage it is used deliberately to create trippy color aura,
+  suggest digital/analog signal degradation, and add visual vibration at edges.
+
+  Two modes:
+  1. **Radial (lens)**: offset increases from center outward, with red shifting out
+     and blue shifting in (or vice versa). Physically accurate to lens behavior.
+  2. **Directional (scan/glitch)**: fixed horizontal or vertical offset between
+     channels. Simulates scan artifact or deliberate RGB shift.
+tags:
+  distortion: [lens, smear]
+  color: [neon, acid, CMYK]
+  mood: [uncanny, chaotic, aggressive]
+  era: [90s_rave, contemporary]
+  shader_ops: [chromatic_aberration, displacement]
+parameters:
+  - name: mode
+    type: enum
+    options: [radial, directional]
+    default: radial
+  - name: intensity
+    type: float
+    default: 0.008
+    range: [0.0, 0.05]
+    description: "Aberration intensity as fraction of image width (radial) or pixels (directional)."
+  - name: red_offset
+    type: float
+    default: 1.0
+    range: [-5.0, 5.0]
+    description: "Red channel offset multiplier (directional mode, pixels)."
+  - name: blue_offset
+    type: float
+    default: -1.0
+    range: [-5.0, 5.0]
+    description: "Blue channel offset multiplier (directional mode, pixels)."
+constraints:
+  do:
+    - "Use radial mode for natural lens-aberration aesthetic."
+    - "Use directional mode for scan/glitch effects."
+    - "Apply after compositing, before final vignette/grain pass."
+  avoid:
+    - "Intensity above 0.03 unless going for strong glitch effect."
+    - "Applying to both radial and directional simultaneously — choose one per pass."
+compat:
+  works_with:
+    - psc.style.cyberdelic_neon.v1
+    - psc.style.glitch_scan_bend.v1
+    - psc.print_artifact.cmyk_misregistration.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL radial chromatic aberration
+      vec3 chromaticAberration(sampler2D tex, vec2 uv, float intensity) {
+        vec2 dir = uv - 0.5;
+        float r = texture(tex, uv + dir * intensity).r;
+        float g = texture(tex, uv).g;
+        float b = texture(tex, uv - dir * intensity).b;
+        return vec3(r, g, b);
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "Standard radial chromatic aberration GLSL technique"
+version: 1
+created_at: "2026-04-10"

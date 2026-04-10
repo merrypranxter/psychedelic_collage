@@ -1,0 +1,69 @@
+id: psc.palette.cyberdelic_neon.v1
+type: palette
+name: Cyberdelic Neon
+aliases: [neon_cyberpunk, rave_palette, acid_neon, digital_neon]
+summary: "Deep-space black base with electric neon highlights for cyberdelic and rave aesthetics."
+description: |
+  Black-dominant palette punctuated by intense neon chromas. The high contrast ratio
+  between background and highlight creates the glow/bloom effect central to cyberdelic
+  aesthetic. Colors are chosen in the blue–magenta–cyan–green range typical of
+  CRT phosphors and neon tube lighting.
+
+  Apply additive (screen) blend mode to bright elements so they appear to glow
+  over dark backgrounds. Use chromatic aberration to split highlight colors slightly.
+tags:
+  color: [neon, acid, duotone]
+  texture: [film_grain]
+  mood: [euphoric, chaotic, mystical]
+  era: [90s_rave, contemporary]
+  shader_ops: [chromatic_aberration, color_grade, noise_overlay]
+colors:
+  - name: Void Black
+    hex: "#040608"
+    role: background
+  - name: Neon Cyan
+    hex: "#00FFF0"
+    role: primary_glow
+  - name: Electric Magenta
+    hex: "#FF00CC"
+    role: secondary_glow
+  - name: Acid Lime
+    hex: "#B0FF00"
+    role: tertiary_glow
+  - name: UV Blue
+    hex: "#5500FF"
+    role: mid_shadow
+  - name: Hot White
+    hex: "#FFFFFF"
+    role: hotspot
+  - name: Deep Indigo
+    hex: "#1A0040"
+    role: near_black_shadow
+  - name: Coral Flare
+    hex: "#FF5544"
+    role: warm_accent
+constraints:
+  do:
+    - "Use Void Black as dominant background (60%+ of area)."
+    - "Apply screen blend mode to glow colors to avoid flat layering."
+    - "Use chromatic aberration to split Neon Cyan and Electric Magenta highlight edges."
+    - "Add bloom/glow radius of 8-20px on all bright elements."
+  avoid:
+    - "Light or white backgrounds — completely kills the neon effect."
+    - "Muted, desaturated versions of these colors."
+compat:
+  works_with:
+    - psc.style.cyberdelic_neon.v1
+    - psc.shader.chromatic_aberration.v1
+    - psc.technique.compositing_modes.v1
+outputs:
+  - kind: prompt_fragment
+    value: "neon glow on black, cyberpunk palette, electric cyan and magenta, dark background rave"
+  - kind: shader_hint
+    value: "base black + screen blend neon highlights + bloom + chromatic aberration at edges"
+provenance:
+  sources:
+    - kind: note
+      value: "Inspired by 1990s rave flyer design and cyberpunk visual language"
+version: 1
+created_at: "2026-04-10"

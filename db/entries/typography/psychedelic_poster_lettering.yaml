@@ -1,0 +1,64 @@
+id: psc.typography.psychedelic_poster_lettering.v1
+type: typography
+name: Psychedelic Poster Lettering
+aliases: [wes_wilson_type, poster_lettering, organic_type, art_nouveau_display]
+summary: "Flowing, organic display letterforms derived from Art Nouveau, packed densely into compositional space."
+description: |
+  Pioneered by Wes Wilson for Family Dog and Bill Graham concert posters (1966–),
+  psychedelic poster lettering takes Art Nouveau's organic, plant-like letterforms
+  and pushes them to illegibility. Letters curve, bulge, and interlock to fill
+  every available negative space. Reading becomes an act of decoding.
+
+  Characteristics:
+  - Letterforms built on circular and elliptical strokes.
+  - Extreme x-height variation (some letters very tall, some very wide).
+  - Letters sharing walls/strokes — negative space interlocks with positive.
+  - Heavy optical balancing: letters fill their bounding column from edge to edge.
+  - Color: typically uses only 2–3 colors from the poster palette.
+  - Always paired with the event/artist name as the content — the type IS the image.
+
+  Digital approaches: hand-drawn in vector (Illustrator, Figma), generated via
+  liquify/warp on a clean typeface, or prompted via AI with "1960s psychedelic
+  concert poster lettering" and then vectorized.
+tags:
+  typography: [psychedelic_poster, warped, handlettered]
+  print: [screenprint, offset]
+  color: [acid, neon]
+  composition: [maximalist, centered]
+  mood: [euphoric, mystical, chaotic]
+  era: [60s]
+parameters:
+  - name: warp_intensity
+    type: float
+    default: 0.6
+    range: [0.0, 1.0]
+    description: "Amount of warp distortion applied to baseline letterforms."
+  - name: fill_density
+    type: float
+    default: 0.85
+    range: [0.3, 1.0]
+    description: "How densely letters fill their allocated bounding area."
+constraints:
+  do:
+    - "Treat negative space as positive — letter gaps should form shapes."
+    - "Curve every baseline — a straight baseline is not psychedelic poster type."
+    - "Outline letterforms with a contrasting color, then fill with acid palette."
+  avoid:
+    - "Clean sans-serif letterforms — everything must be organic and sinuous."
+    - "Large amounts of lowercase text — this type is ALL CAPS display only."
+compat:
+  works_with:
+    - psc.style.sixties_poster_op_art.v1
+    - psc.palette.acid_vibration.v1
+    - psc.composition.radial_centered.v1
+outputs:
+  - kind: prompt_fragment
+    value: "1960s psychedelic poster lettering, Art Nouveau type, organic curving letterforms, flowing display font"
+  - kind: shader_hint
+    value: "apply bulge/warp to base letterforms, curve baseline with bezier path, fill with vibrating palette"
+provenance:
+  sources:
+    - kind: note
+      value: "Inspired by Wes Wilson, Victor Moscoso, and Rick Griffin poster typography"
+version: 1
+created_at: "2026-04-10"

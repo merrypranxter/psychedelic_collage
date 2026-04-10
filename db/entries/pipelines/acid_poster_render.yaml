@@ -1,0 +1,61 @@
+id: psc.pipeline.acid_poster_render.v1
+type: pipeline
+name: Acid Poster Render
+aliases: [poster_pipeline, screenprint_pipeline, 60s_poster_render]
+summary: "Render an AI or photo source through a full 1960s acid poster treatment: posterize, vibrate, print."
+description: |
+  Takes any source image and produces a 1960s-style psychedelic concert poster look:
+  color separation to acid palette, halftone for all tonal areas, screenprint
+  simulation, op-art border treatment, and type compositing.
+tags:
+  medium: [digital, hybrid]
+  source: [AI_gen, photo, illustration]
+  print: [screenprint, halftone]
+  color: [acid, neon]
+  mood: [euphoric, chaotic]
+  era: [60s]
+inputs:
+  - kind: image
+    notes: "Source image: portrait, figure, or abstract subject works best"
+steps:
+  - use: psc.technique.masking_and_isolation.v1
+    params:
+      mask_type: ai_segment
+    notes: "Extract subject from background"
+  - use: psc.print_artifact.screenprint_separation.v1
+    params:
+      ink_count: 4
+    notes: "Posterize to 4 screenprint color separations"
+  - use: psc.print_artifact.halftone_screen.v1
+    params:
+      frequency: 55.0
+      dot_shape: round
+    notes: "Apply halftone to tonal gradient areas"
+  - use: psc.technique.compositing_modes.v1
+    params:
+      blend_mode: multiply
+    notes: "Compose ink layers via multiply (simulates transparent inks)"
+  - use: psc.print_artifact.cmyk_misregistration.v1
+    params:
+      cyan_offset_x: 3.0
+      magenta_offset_x: -2.0
+    notes: "Registration error for acid poster authenticity"
+  - use: psc.shader.paper_grain_overlay.v1
+    params:
+      grain_intensity: 0.2
+      blend_mode: overlay
+    notes: "Paper texture over entire composition"
+outputs:
+  - kind: image
+    notes: "1960s acid poster–style render"
+compat:
+  works_with:
+    - psc.palette.acid_vibration.v1
+    - psc.style.sixties_poster_op_art.v1
+    - psc.typography.psychedelic_poster_lettering.v1
+provenance:
+  sources:
+    - kind: note
+      value: "1960s concert poster reproduction pipeline"
+version: 1
+created_at: "2026-04-10"

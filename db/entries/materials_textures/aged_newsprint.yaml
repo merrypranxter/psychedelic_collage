@@ -1,0 +1,68 @@
+id: psc.material.aged_newsprint.v1
+type: material
+name: Aged Newsprint
+aliases: [newsprint, yellowed_paper, foxed_paper, old_newspaper]
+summary: "Aged, yellowed newsprint as a collage substrate or texture layer."
+description: |
+  Newsprint paper yellows rapidly through acid-catalyzed oxidation, producing
+  the characteristic warm tan/yellow tones of aged newspapers. Combined with
+  offset halftone printing and ink bleed, it is the foundational material of
+  zine and collage culture.
+
+  As a texture: scan aged newspaper at 600 DPI for use as:
+  - Background substrate (set as layer below all collage elements)
+  - Overlay texture (multiply blend at 40-60% to age elements)
+  - Color wash source (extract color layer for yellow tinting)
+  - Print artifact carrier (newsprint always carries halftone and ink bleed)
+
+  Digital synthesis: warm noise field (Perlin, simplex) in ochre/tan hues,
+  plus a fine halftone overlay, plus a slight brownish vignette toward edges.
+tags:
+  medium: [analog, hybrid]
+  source: [scan, magazine]
+  texture: [paper_grain, ink_bleed, dust]
+  print: [newsprint, halftone]
+  color: [earth, monochrome]
+  mood: [dreamy, uncanny]
+  era: [60s, 70s]
+parameters:
+  - name: yellow_tint_strength
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "Strength of yellowing tint applied to paper."
+  - name: foxing_density
+    type: float
+    default: 0.15
+    range: [0.0, 0.5]
+    description: "Density of brown foxing spots (age marks)."
+  - name: grain_scale
+    type: float
+    default: 1.0
+    range: [0.5, 3.0]
+    description: "Scale of paper fibre grain texture."
+constraints:
+  do:
+    - "Use as base layer beneath all other collage elements."
+    - "Apply multiply blend when using as overlay texture."
+    - "Combine with halftone overlay for authentic newsprint substrate."
+  avoid:
+    - "Pure white background — always use a warm paper tone."
+    - "Clean digital white paper texture — must have grain and warmth."
+compat:
+  works_with:
+    - psc.palette.vintage_duotone.v1
+    - psc.print_artifact.halftone_screen.v1
+    - psc.print_artifact.ink_bleed.v1
+    - psc.style.analog_zine_xerox.v1
+outputs:
+  - kind: prompt_fragment
+    value: "aged yellowed newsprint, foxed paper, worn newspaper, sepia paper texture"
+  - kind: shader_hint
+    value: "ochre/tan noise field + slight halftone + brownish vignette + foxing spots"
+provenance:
+  sources:
+    - kind: note
+      value: "Physical newsprint material properties for digital simulation"
+version: 1
+created_at: "2026-04-10"

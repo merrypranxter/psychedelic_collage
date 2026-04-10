@@ -1,0 +1,79 @@
+id: psc.palette.risograph_rainbow.v1
+type: palette
+name: Risograph Rainbow
+aliases: [riso, riso_palette, risograph_colors, riso_standard]
+summary: "Standard Risograph ink set palette for digital simulation of riso-printed collage."
+description: |
+  Risograph printers use a set of pre-mixed fluorescent and standard inks that have
+  distinct color signatures. Because riso uses semi-transparent inks that overprint,
+  combining two colors creates a third. The palette has a characteristic grungy-bright
+  quality — colors are saturated but not perfectly smooth, with slight ink inconsistency.
+
+  Standard riso inks reproduced here as closest digital equivalents. Overprinting
+  pairs produce predictable blends: Fluorescent Pink + Yellow = Orange; 
+  Blue + Yellow = Green; Blue + Fluorescent Pink = Purple.
+
+  Use multiply blend mode at ~85% opacity to simulate riso ink transparency.
+tags:
+  color: [neon, acid, CMYK]
+  print: [risograph]
+  texture: [paper_grain, ink_bleed]
+  mood: [euphoric, chaotic]
+  era: [contemporary, 90s_rave]
+colors:
+  - name: Riso Black
+    hex: "#212322"
+    role: primary_ink
+  - name: Riso Yellow
+    hex: "#FFE800"
+    role: standard_ink
+  - name: Riso Fluorescent Pink
+    hex: "#FF4889"
+    role: fluorescent_ink
+  - name: Riso Blue
+    hex: "#0078BF"
+    role: standard_ink
+  - name: Riso Red
+    hex: "#FF4C40"
+    role: standard_ink
+  - name: Riso Green
+    hex: "#00A95C"
+    role: standard_ink
+  - name: Riso Teal
+    hex: "#00838A"
+    role: standard_ink
+  - name: Riso Purple
+    hex: "#765BA7"
+    role: standard_ink
+  - name: Riso Fluorescent Orange
+    hex: "#FF6C2F"
+    role: fluorescent_ink
+  - name: Riso Mint
+    hex: "#82D8D5"
+    role: light_ink
+constraints:
+  do:
+    - "Use multiply blend at 80-90% opacity to simulate ink transparency."
+    - "Limit to 2-3 ink colors per composition for authentic riso look."
+    - "Add slight paper grain texture underneath (riso paper is always textured)."
+    - "Allow overprint mixes to show — don't correct color fringing."
+  avoid:
+    - "More than 3 ink passes — becomes muddy and loses riso character."
+    - "Perfect color registration — slight misalignment is authentic."
+compat:
+  works_with:
+    - psc.print_artifact.ink_bleed.v1
+    - psc.print_artifact.cmyk_misregistration.v1
+    - psc.material.watercolor_paper.v1
+    - psc.technique.compositing_modes.v1
+outputs:
+  - kind: prompt_fragment
+    value: "risograph print palette, fluorescent ink overprint, riso paper texture, two-color print"
+  - kind: shader_hint
+    value: "separate into 2-3 color channels → multiply blend each at 85% opacity over paper texture"
+provenance:
+  sources:
+    - kind: note
+      value: "Based on Riso Kagaku standard ink set color specifications"
+version: 1
+created_at: "2026-04-10"

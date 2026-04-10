@@ -1,0 +1,81 @@
+id: psc.print_artifact.cmyk_misregistration.v1
+type: print_artifact
+name: CMYK Misregistration
+aliases: [misreg, color_registration, print_misreg, cmyk_offset]
+summary: "Color separation offset artifact where CMYK ink passes don't perfectly align."
+description: |
+  In commercial offset and screen printing, each color (C, M, Y, K) is printed
+  as a separate pass. When these passes don't align perfectly (due to paper stretch,
+  mechanical inaccuracy, or intentional looseness), misregistration produces color
+  fringing: chromatic outlines, doubled edges, and color bleeding.
+
+  In psychedelic collage, misregistration is used intentionally as a trippy effect:
+  it produces color aura/halo around elements, creates vibrating edges at color
+  boundaries, and gives a print-authentic rawness.
+
+  Shader: separate image into simulated C, M, Y, K channels → shift each channel
+  by a random or directional offset → recompose via screen/multiply blends.
+  Chromatic aberration (RGB channel split) is the simplest digital proxy.
+tags:
+  print: [offset, screenprint, halftone, risograph]
+  color: [CMYK, neon, acid]
+  distortion: [warp, smear]
+  mood: [chaotic, aggressive, uncanny]
+  era: [60s, 70s, contemporary]
+  shader_ops: [chromatic_aberration, color_grade]
+parameters:
+  - name: cyan_offset_x
+    type: float
+    default: 2.0
+    range: [-10.0, 10.0]
+    description: "Horizontal offset for cyan channel (pixels)."
+  - name: cyan_offset_y
+    type: float
+    default: 0.0
+    range: [-10.0, 10.0]
+    description: "Vertical offset for cyan channel."
+  - name: magenta_offset_x
+    type: float
+    default: -1.5
+    range: [-10.0, 10.0]
+    description: "Horizontal offset for magenta channel."
+  - name: magenta_offset_y
+    type: float
+    default: 1.0
+    range: [-10.0, 10.0]
+    description: "Vertical offset for magenta channel."
+  - name: yellow_offset_x
+    type: float
+    default: 0.5
+    range: [-10.0, 10.0]
+    description: "Horizontal offset for yellow channel."
+  - name: yellow_offset_y
+    type: float
+    default: -0.5
+    range: [-10.0, 10.0]
+    description: "Vertical offset for yellow channel."
+constraints:
+  do:
+    - "Keep misregistration subtle (2-5px) for authentic print feel."
+    - "Apply after other print artifact passes (halftone, grain)."
+    - "Use larger offsets (8-15px) for deliberate glitch/acid effect."
+  avoid:
+    - "Identical offsets for all channels — vary direction for realism."
+    - "More than 15px offset — crosses into chromatic aberration glitch territory."
+compat:
+  works_with:
+    - psc.print_artifact.halftone_screen.v1
+    - psc.print_artifact.ink_bleed.v1
+    - psc.palette.risograph_rainbow.v1
+    - psc.shader.chromatic_aberration.v1
+outputs:
+  - kind: shader_hint
+    value: "split to CMY channels → offset each UV by params → recombine via screen blend"
+  - kind: prompt_fragment
+    value: "CMYK misregistration, color fringing, offset print artifact, psychedelic registration error"
+provenance:
+  sources:
+    - kind: note
+      value: "Commercial printing misregistration as collage aesthetic element"
+version: 1
+created_at: "2026-04-10"

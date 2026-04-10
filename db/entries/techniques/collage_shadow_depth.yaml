@@ -1,0 +1,76 @@
+id: psc.technique.collage_shadow_depth.v1
+type: technique
+name: Collage Shadow and Physical Depth
+aliases: [paper_depth, sticker_shadow, layer_shadow, drop_shadow_collage]
+summary: "Simulating the physical thickness of paper cutouts through strategic shadow casting."
+description: |
+  Physical collage elements have real thickness — a photo cutout glued onto card
+  stock casts a real shadow. Replicating this digitally is the single most effective
+  trick for selling the "real collage" illusion.
+
+  Methods by fidelity:
+  1. **Simple drop shadow**: offset soft-edged dark shape beneath element. Works
+     for flat, cleanly cut pieces.
+  2. **Contact shadow**: shadow is darker and sharper near element edges, softer
+     further away. More physical.
+  3. **Perspective shadow**: shadow direction consistent with implied light source
+     across all layers. Requires discipline but is very convincing.
+  4. **Crushed edge**: slight darkening of the element itself at its base edge —
+     simulates paper thickness shadow on the glued edge.
+  5. **Ambient occlusion proxy**: multiply-blend a soft dark halo around complex
+     cutout shapes to suggest 3D depth.
+
+  Shadow color should be warm (ochre, sepia) for vintage; cool blue-grey for
+  contemporary; pure black for high-contrast zine.
+tags:
+  medium: [analog, digital, hybrid]
+  texture: [glue, paper_grain, tape]
+  composition: [collage_stack]
+  mood: [uncanny, dreamy]
+parameters:
+  - name: shadow_direction_deg
+    type: float
+    default: 135.0
+    range: [0.0, 360.0]
+    description: "Angle of light source for shadow casting (degrees)."
+  - name: shadow_distance_px
+    type: float
+    default: 6.0
+    range: [1.0, 40.0]
+    description: "Distance the shadow is offset from the element."
+  - name: shadow_blur_px
+    type: float
+    default: 8.0
+    range: [0.0, 30.0]
+    description: "Gaussian blur radius on the shadow shape."
+  - name: shadow_opacity
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "Overall shadow opacity."
+  - name: shadow_color
+    type: color
+    default: "#2a1a0e"
+    description: "Shadow color hex — use warm browns for vintage feel."
+constraints:
+  do:
+    - "Keep shadow direction consistent across all layers in a composition."
+    - "Use warm shadow colors for analog/vintage; cool for contemporary."
+    - "Add crushed-edge darkening on elements that appear glued down."
+  avoid:
+    - "Identical shadow distance/blur on all elements — vary by apparent height."
+    - "Pure black shadows on warm-toned vintage collages."
+compat:
+  works_with:
+    - psc.technique.cutout_layering.v1
+    - psc.material.aged_newsprint.v1
+    - psc.style.surreal_photomontage.v1
+outputs:
+  - kind: shader_hint
+    value: "offset mask by shadow_distance → gaussian blur → multiply composite beneath element"
+provenance:
+  sources:
+    - kind: note
+      value: "Physical paper collage simulation technique"
+version: 1
+created_at: "2026-04-10"

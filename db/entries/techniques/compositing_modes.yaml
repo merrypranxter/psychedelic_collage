@@ -1,0 +1,71 @@
+id: psc.technique.compositing_modes.v1
+type: technique
+name: Compositing Blend Modes
+aliases: [blend_modes, layer_blending, photoshop_modes]
+summary: "Using non-destructive blend modes to create tonal, color, and textural interactions between layers."
+description: |
+  Blend modes determine how pixel values of one layer combine with layers beneath it.
+  In collage, blend modes replace physical processes: multiply simulates ink/dye
+  transparency, screen simulates projected light, overlay simulates double exposure,
+  and color/hue modes allow selective color tinting without obscuring texture.
+
+  Key modes for psychedelic collage:
+  - **Multiply**: darkens; good for ink textures, shadows, print artifact overlays.
+  - **Screen**: brightens; good for glow, neon, light leaks, lens flares.
+  - **Overlay**: contrast punch; good for texture unification, halftone overlays.
+  - **Color Dodge**: extreme brightening; good for neon highlights and acid color.
+  - **Soft Light**: subtle texture blending; good for paper grain over imagery.
+  - **Difference**: inverts where colors differ; trippy color inversion patterns.
+  - **Luminosity/Color**: separate hue from brightness for color grade operations.
+
+  In WebGL/GLSL, blend modes are implemented manually via per-pixel math.
+tags:
+  medium: [digital, hybrid]
+  texture: [paper_grain, film_grain, ink_bleed]
+  distortion: [warp]
+  mood: [euphoric, dreamy, chaotic]
+parameters:
+  - name: blend_mode
+    type: enum
+    options: [multiply, screen, overlay, color_dodge, soft_light, difference, luminosity, color, hard_light, exclusion]
+    default: multiply
+  - name: layer_opacity
+    type: float
+    default: 1.0
+    range: [0.0, 1.0]
+constraints:
+  do:
+    - "Use multiply for all print artifact / ink texture overlays."
+    - "Use screen for glow, neon, and light-element layers."
+    - "Use soft_light at 30-60% opacity for paper grain overlays."
+    - "Preview blend modes in context — results depend heavily on underlying colors."
+  avoid:
+    - "Hard Light at full opacity without reason — too aggressive."
+    - "Stacking 5+ blend mode layers of the same type (diminishing returns, often just noise)."
+compat:
+  works_with:
+    - psc.technique.cutout_layering.v1
+    - psc.technique.texture_sourcing.v1
+    - psc.print_artifact.halftone_screen.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL multiply blend
+      vec3 blend_multiply(vec3 base, vec3 blend) {
+        return base * blend;
+      }
+      // GLSL screen blend
+      vec3 blend_screen(vec3 base, vec3 blend) {
+        return 1.0 - (1.0 - base) * (1.0 - blend);
+      }
+      // GLSL overlay blend
+      vec3 blend_overlay(vec3 base, vec3 blend) {
+        return mix(2.0*base*blend, 1.0 - 2.0*(1.0-base)*(1.0-blend), step(0.5, base));
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "Standard photographic compositing modes, adapted for collage practice"
+version: 1
+created_at: "2026-04-10"

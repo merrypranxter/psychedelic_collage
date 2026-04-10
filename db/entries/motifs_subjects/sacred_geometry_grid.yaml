@@ -1,0 +1,51 @@
+id: psc.motif.sacred_geometry_grid.v1
+type: motif
+name: Sacred Geometry Grid
+aliases: [sacred_geometry, flower_of_life, metatron_cube, golden_ratio_grid]
+summary: "Geometric frameworks derived from sacred geometry for use as collage composition underlays."
+description: |
+  Sacred geometry refers to the symbolic and geometric systems historically attributed
+  to cosmological and spiritual significance: Flower of Life (overlapping circles),
+  Metatron's Cube (Platonic solid projections), Sri Yantra (interlocking triangles),
+  and Golden Spiral (Fibonacci proportion guide).
+
+  In collage, these grids serve as compositional underlays that organize chaotic
+  element placement into a satisfying mathematical order. The geometry itself may
+  be fully visible (drawn gold lines on a dark field) or used as an invisible grid
+  that the collage elements align to.
+
+  Construction rules:
+  - Flower of Life: start with center circle, radius R. Add 6 circles of radius R
+    centered on equidistant points of the first. Repeat outward.
+  - Golden spiral: construct from 1:φ rectangle subdivisions.
+  - Sri Yantra: 4 upward + 5 downward interlocking triangles within circle.
+tags:
+  medium: [digital, analog, hybrid]
+  source: [illustration, AI_gen]
+  composition: [centered, maximalist]
+  distortion: [kaleidoscope]
+  mood: [mystical, euphoric]
+  subject: [occult, cosmic, abstract]
+  era: [60s, contemporary]
+constraints:
+  do:
+    - "Use as composition guide even if geometry is not visible in final work."
+    - "Render geometry in palette's metallic or accent color (gold, silver)."
+    - "Place collage elements so they intersect or emerge from geometry nodes."
+  avoid:
+    - "Dense fine-line geometry at small scales — loses readability."
+compat:
+  works_with:
+    - psc.style.occult_mandala_collage.v1
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.palette.occult_jewel.v1
+    - psc.composition.radial_centered.v1
+outputs:
+  - kind: prompt_fragment
+    value: "sacred geometry overlay, Flower of Life grid, golden ratio spiral, esoteric geometric framework"
+provenance:
+  sources:
+    - kind: note
+      value: "Sacred geometry construction methods for collage composition"
+version: 1
+created_at: "2026-04-10"

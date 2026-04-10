@@ -1,0 +1,56 @@
+id: psc.technique.ai_to_collage_constraints.v1
+type: technique
+name: AI-to-Collage Constraints
+aliases: [ai_collage, stable_diffusion_collage, ai_cutout_pipeline]
+summary: "Guidelines for directing AI-generated imagery into psychedelic collage workflows."
+description: |
+  AI image generators (Stable Diffusion, Midjourney, DALL-E, Flux) can feed
+  psychedelic collage pipelines but require intentional prompting and post-processing
+  to avoid a "generic AI smoothness" that conflicts with collage aesthetics.
+
+  Prompting strategies:
+  - Request "isolated on white/black/flat color background" for easy cutout.
+  - Include paper texture or scan artifact adjectives: "printed on aged newsprint",
+    "xerox copy", "magazine scan" — diffusion models have seen these.
+  - Specify print medium: "risograph print", "silkscreen poster", "linocut".
+  - Request partial states: "half visible, cut off at edge", "overlapping".
+
+  Post-processing requirements for AI → collage integration:
+  1. Background removal (alpha channel extraction).
+  2. Edge cleanup: slight erode + blur on mask to remove diffusion halo.
+  3. Apply print artifact layer on top (halftone, grain, ink bleed).
+  4. Color grade to match collage palette (LUT or palette mapping).
+  5. Optionally: print artifact pass to "de-AI" the smoothness.
+tags:
+  medium: [digital, hybrid]
+  source: [AI_gen]
+  cut_edge: [mask_soft, scissor]
+  texture: [paper_grain, film_grain, ink_bleed]
+  mood: [euphoric, dreamy, chaotic]
+constraints:
+  do:
+    - "Always remove AI background before compositing into collage stack."
+    - "Apply at least one print artifact pass to reduce AI smoothness."
+    - "Prompt for simplified/flat color style when planning to use posterize pass."
+    - "Include medium adjectives in prompts (risograph, xerox, silkscreen)."
+  avoid:
+    - "Compositing raw photorealistic AI output directly — will look like a bad Photoshop."
+    - "Excessive AI upscaling before collage compositing — adds unwanted sharpening."
+compat:
+  works_with:
+    - psc.technique.cutout_layering.v1
+    - psc.print_artifact.halftone_screen.v1
+    - psc.print_artifact.photocopy_noise.v1
+    - psc.shader.paper_grain_overlay.v1
+    - psc.pipeline.ai_gen_to_collage.v1
+outputs:
+  - kind: prompt_fragment
+    value: "isolated element on flat background, risograph print quality, magazine cutout, scan texture"
+  - kind: shader_hint
+    value: "background remove → edge erode → grain overlay → halftone → palette map"
+provenance:
+  sources:
+    - kind: note
+      value: "Practical AI-to-collage integration patterns from generative art workflow"
+version: 1
+created_at: "2026-04-10"

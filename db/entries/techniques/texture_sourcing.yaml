@@ -1,0 +1,66 @@
+id: psc.technique.texture_sourcing.v1
+type: technique
+name: Texture Sourcing
+aliases: [texture_library, scan_textures, found_textures]
+summary: "Curating and preparing physical and digital textures for use as collage layer materials."
+description: |
+  Every psychedelic collage benefits from a personal library of scanned textures.
+  Good sources: aged newsprint, watercolor paper, linen canvas, manila envelopes,
+  expired photographic paper, phonebook pages, wrapping paper, acetate overlays,
+  painted cardboard, inkjet-printed gradients on cheap paper.
+
+  Scan at 600+ DPI for full grain visibility. Process in batches: level to pure
+  black/white or neutral mid-grey, remove heavy color casts, save as PNG or TIFF.
+
+  Digital sources: Photoshop filter-generated noise, procedural Perlin/simplex
+  noise in JS/GLSL, AI-generated paper/fabric textures, CC0 texture databases.
+
+  Application: overlay as multiply (ink textures), soft-light (paper grain),
+  screen (dust/scratch on dark backgrounds), or as displacement maps to warp
+  other layers.
+tags:
+  medium: [analog, digital, hybrid]
+  source: [scan, magazine, photo]
+  texture: [paper_grain, film_grain, dust, scratches, ink_bleed, glue, tape]
+  mood: [dreamy, uncanny, chaotic]
+parameters:
+  - name: scan_dpi
+    type: int
+    default: 600
+    range: [300, 2400]
+    description: "Scanning resolution for physical textures."
+  - name: texture_scale
+    type: float
+    default: 1.0
+    range: [0.1, 5.0]
+    description: "Scale multiplier applied to texture before compositing."
+  - name: overlay_opacity
+    type: float
+    default: 0.5
+    range: [0.0, 1.0]
+    description: "Blend opacity of texture layer."
+constraints:
+  do:
+    - "Scan physical textures at minimum 600 DPI."
+    - "Keep a clean neutral-tone version of each texture for flexible reuse."
+    - "Tag textures by type (grain, scratch, ink, paper) for searchable library."
+  avoid:
+    - "Over-applying the same texture uniformly — rotate and scale for variety."
+    - "Heavy color cast in texture scans — correct to neutral unless intentional."
+compat:
+  works_with:
+    - psc.technique.compositing_modes.v1
+    - psc.shader.paper_grain_overlay.v1
+    - psc.material.aged_newsprint.v1
+    - psc.material.watercolor_paper.v1
+outputs:
+  - kind: prompt_fragment
+    value: "layered paper textures, grain overlay, aged newsprint, film grain, scan artifacts"
+  - kind: shader_hint
+    value: "sample texture atlas → soft_light blend at 40-60% opacity → scale by UV"
+provenance:
+  sources:
+    - kind: note
+      value: "Texture sourcing is fundamental to all analog/hybrid collage workflows"
+version: 1
+created_at: "2026-04-10"

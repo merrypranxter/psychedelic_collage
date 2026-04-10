@@ -1,0 +1,82 @@
+id: psc.shader.paper_grain_overlay.v1
+type: shader
+name: Paper Grain Overlay Shader
+aliases: [grain_overlay, paper_texture_shader, noise_grain_shader]
+summary: "GLSL/WebGL shader adding procedural or texture-sampled paper grain over composited imagery."
+description: |
+  Simulates photographic grain, paper fibre texture, and film grain as a screen-space
+  overlay. Can operate in two modes:
+  1. **Procedural**: generates grain mathematically using hash noise functions.
+     Fast, tileable, but less organic-looking.
+  2. **Texture sample**: samples a pre-scanned grain texture atlas (higher quality,
+     more organic). Tile and randomize offset each frame for animated grain.
+
+  Blend modes for grain:
+  - Soft light at 30–70% opacity: most common, lifts shadows and darkens highlights.
+  - Overlay: stronger contrast punch.
+  - Screen: adds grain as bright speckles (film grain look).
+  - Multiply: darkens — simulates printing on rough paper.
+tags:
+  texture: [paper_grain, film_grain, dust]
+  print: [newsprint, offset, risograph]
+  shader_ops: [noise_overlay, vignette]
+  mood: [dreamy, uncanny]
+parameters:
+  - name: grain_mode
+    type: enum
+    options: [procedural, texture_sample]
+    default: procedural
+  - name: grain_intensity
+    type: float
+    default: 0.25
+    range: [0.0, 1.0]
+    description: "Strength of grain effect."
+  - name: grain_scale
+    type: float
+    default: 1.0
+    range: [0.1, 5.0]
+    description: "Scale of grain pattern (1 = pixel-scale)."
+  - name: blend_mode
+    type: enum
+    options: [soft_light, overlay, screen, multiply]
+    default: soft_light
+  - name: blend_opacity
+    type: float
+    default: 0.45
+    range: [0.0, 1.0]
+  - name: animate
+    type: bool
+    default: true
+    description: "Randomly offset grain seed each frame for animated film grain."
+constraints:
+  do:
+    - "Use soft_light blend for the most photographic grain result."
+    - "Animate grain offset (different seed per frame) for real-time outputs."
+    - "Apply as final pass after all other effects."
+  avoid:
+    - "Overly large grain_scale values — looks like noise art, not paper."
+    - "Multiply blend on dark backgrounds — makes them nearly black."
+compat:
+  works_with:
+    - psc.print_artifact.photocopy_noise.v1
+    - psc.print_artifact.ink_bleed.v1
+    - psc.material.aged_newsprint.v1
+    - psc.shader.halftone_screen.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // Procedural grain (GLSL)
+      float grain(vec2 uv, float seed) {
+        return fract(sin(dot(uv * 1000.0 + seed, vec2(127.1, 311.7))) * 43758.5453);
+      }
+      // soft light blend
+      vec3 soft_light(vec3 base, float g) {
+        float gv = g * 2.0 - 1.0;
+        return base + gv * (base - base * base);
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "Procedural noise grain — GLSL hash function technique"
+version: 1
+created_at: "2026-04-10"

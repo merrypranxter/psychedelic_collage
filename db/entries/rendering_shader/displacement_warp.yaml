@@ -1,0 +1,75 @@
+id: psc.shader.displacement_warp.v1
+type: shader
+name: Displacement / UV Warp Shader
+aliases: [displacement_map, uv_warp, mesh_warp, distort_shader]
+summary: "GLSL shader warping image UV coordinates using a displacement map or procedural function."
+description: |
+  Displacement warping reads an offset from a displacement source (greyscale map,
+  noise function, or animated field) and uses it to shift where each pixel samples
+  its source texture. Results range from subtle liquid shimmer to aggressive psychedelic
+  warp, depending on displacement strength and field type.
+
+  Displacement sources for psychedelic collage:
+  - **Simplex/Perlin noise**: smooth organic warp. Good for liquid or fabric feel.
+  - **Image-as-displace**: use a collage element's luminance to warp the layer below.
+  - **Sine field**: regular wave warp. Op-art / flag-waving.
+  - **Feedback displace**: warp using previous frame output — creates spiral/temporal trails.
+  - **Edge-driven displace**: warp is strongest at image edges (Sobel map).
+
+  In GLSL: sample displacement at fragment UV, scale by intensity, add to UV before
+  sampling source texture.
+tags:
+  distortion: [warp, liquify, displacement, feedback]
+  shader_ops: [displacement, feedback_loop]
+  mood: [euphoric, mystical, dreamy, chaotic]
+  era: [60s, contemporary]
+parameters:
+  - name: displacement_source
+    type: enum
+    options: [simplex_noise, image_map, sine_field, feedback, edge_map]
+    default: simplex_noise
+  - name: intensity
+    type: float
+    default: 0.03
+    range: [0.0, 0.3]
+    description: "Displacement strength as fraction of UV space."
+  - name: time_speed
+    type: float
+    default: 0.5
+    range: [0.0, 5.0]
+    description: "Animation speed for time-evolving displacement fields."
+  - name: noise_scale
+    type: float
+    default: 3.0
+    range: [0.1, 20.0]
+    description: "Spatial scale of noise displacement field."
+constraints:
+  do:
+    - "Keep intensity below 0.05 for subtle fabric warp; use 0.1+ for psychedelic distortion."
+    - "Animate displacement field over time for living/breathing effect."
+    - "Use feedback displacement with caution — can quickly diverge to all-noise."
+  avoid:
+    - "Static simplex noise without time animation — looks frozen."
+    - "Too-high intensity with feedback — the image will devolve completely."
+compat:
+  works_with:
+    - psc.technique.kaleidoscope_pattern.v1
+    - psc.style.occult_mandala_collage.v1
+    - psc.pipeline.feedback_loop_kaleidoscope.v1
+    - psc.shader.chromatic_aberration.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL simplex UV displacement
+      vec2 displace(vec2 uv, float time, float intensity, float scale) {
+        vec2 offset;
+        offset.x = sin(uv.y * scale + time) * intensity;
+        offset.y = cos(uv.x * scale + time * 0.7) * intensity;
+        return uv + offset;
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "UV displacement mapping — core GLSL warping technique"
+version: 1
+created_at: "2026-04-10"

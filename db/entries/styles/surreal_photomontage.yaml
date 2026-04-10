@@ -1,0 +1,56 @@
+id: psc.style.surreal_photomontage.v1
+type: style
+name: Surreal Photomontage
+aliases: [photomontage, dada_collage, ernst_collage, surrealist_collage]
+summary: "Dreamlike recombination of photographic fragments to produce impossible, uncanny scenes."
+description: |
+  Originating in Berlin Dada (Heartfield, Höch) and Surrealism (Ernst, Dalí),
+  photomontage treats photographic reality as raw material to be cut, combined,
+  and recontextualized into images that could not exist but feel uncomfortably
+  believable.
+
+  Key methods: scale violation (giant object in domestic setting), category collision
+  (anatomy with machinery, sky where floor should be), seamless or deliberately
+  visible seams, and atmospheric perspective that anchors impossible elements.
+
+  In contemporary AI-collage practice: use image generation for base imagery, then
+  composite with cutout masking, lighting consistency (or deliberate inconsistency),
+  and shadow/perspective cues that sell the impossible juxtaposition.
+tags:
+  medium: [analog, hybrid, digital]
+  source: [photo, magazine, AI_gen, public_domain]
+  cut_edge: [scissor, torn, mask_soft]
+  print: [offset, halftone]
+  color: [earth, monochrome, duotone]
+  texture: [paper_grain, film_grain, dust]
+  distortion: [warp, lens]
+  composition: [centered, maximalist]
+  mood: [uncanny, dreamy, mystical]
+  era: [60s, 70s, contemporary]
+  subject: [portrait, nature, architecture, cosmic]
+constraints:
+  do:
+    - "Maintain some lighting consistency across elements to sell the scene."
+    - "Use scale violations intentionally — a teacup the size of a building is surrealism."
+    - "Allow visible seams when the composition is stronger for it (Dada approach)."
+    - "Add atmospheric haze or gradient to unify disparate elements."
+  avoid:
+    - "Perfectly matched lighting and color on every element — the tension is the point."
+    - "Pure documentation style — the scene must feel impossible or displaced."
+compat:
+  works_with:
+    - psc.technique.cutout_layering.v1
+    - psc.technique.collage_shadow_depth.v1
+    - psc.palette.vintage_duotone.v1
+    - psc.shader.chromatic_aberration.v1
+outputs:
+  - kind: prompt_fragment
+    value: "surrealist photomontage, dreamlike scene, impossible scale, vintage photo fragments, uncanny juxtaposition"
+  - kind: shader_hint
+    value: "blend mode multiply for shadow elements, soft edge mask on cutouts, film grain overlay, vignette"
+provenance:
+  sources:
+    - kind: note
+      value: "References: Hannah Höch, Max Ernst, John Heartfield"
+version: 1
+created_at: "2026-04-10"

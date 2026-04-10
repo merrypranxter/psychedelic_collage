@@ -1,0 +1,65 @@
+id: psc.print_artifact.screenprint_separation.v1
+type: print_artifact
+name: Screenprint Color Separation
+aliases: [screenprint, silkscreen, serigraphy, spot_color_print]
+summary: "Flat color separation aesthetic of screenprinted posters and silkscreen prints."
+description: |
+  Screenprinting applies each color as a separate flat-ink pass through a mesh
+  stencil. The result: clean, flat color areas with sharp edges, overprint color
+  mixing where inks overlap, and a slight ink-on-substrate texture from mesh impression.
+
+  In concert poster screenprinting (the Rick Griffin / Wes Wilson tradition),
+  inks are limited to 4–6 colors and must account for overprint mixing when
+  colors overlap. Black is typically the last pass, printed as a keyline.
+
+  Key visual characteristics: flat fill areas, no gradient except through halftone,
+  slight ink texture/bleed at edges, mesh impression grain on flat areas, and
+  deliberate overprint color zones.
+tags:
+  print: [screenprint, halftone, offset]
+  color: [acid, neon, CMYK]
+  texture: [ink_bleed, paper_grain]
+  mood: [euphoric, chaotic]
+  era: [60s, 70s, contemporary]
+  shader_ops: [posterize, quantize, halftone]
+parameters:
+  - name: ink_count
+    type: int
+    default: 4
+    range: [2, 8]
+    description: "Number of simulated ink passes/colors."
+  - name: mesh_texture_opacity
+    type: float
+    default: 0.15
+    range: [0.0, 0.5]
+    description: "Opacity of mesh impression texture on flat ink areas."
+  - name: overprint_mode
+    type: enum
+    options: [multiply, screen, normal]
+    default: multiply
+    description: "Blend mode for ink overlap simulation."
+constraints:
+  do:
+    - "Posterize to ink_count tonal levels before applying color separation."
+    - "Use multiply blend where inks overlap to simulate real ink mixing."
+    - "Add mesh texture at low opacity over flat ink areas."
+  avoid:
+    - "Gradients without halftone dot conversion — not physically screenprinted."
+    - "More than 6 colors for period-authentic poster look."
+compat:
+  works_with:
+    - psc.palette.acid_vibration.v1
+    - psc.palette.risograph_rainbow.v1
+    - psc.print_artifact.halftone_screen.v1
+    - psc.style.sixties_poster_op_art.v1
+outputs:
+  - kind: shader_hint
+    value: "posterize → separate by ink color → screen blend passes → multiply overprint zones → mesh grain overlay"
+  - kind: prompt_fragment
+    value: "screenprint poster, flat color separation, silkscreen, overprint color mixing, ink texture"
+provenance:
+  sources:
+    - kind: note
+      value: "Classic concert poster and protest art screenprint technique"
+version: 1
+created_at: "2026-04-10"

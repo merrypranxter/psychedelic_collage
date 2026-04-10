@@ -1,0 +1,78 @@
+id: psc.shader.halftone_screen.v1
+type: shader
+name: Halftone Screen Shader
+aliases: [halftone_shader, dot_screen_glsl, screen_tone_shader]
+summary: "GLSL/WebGL shader implementing analytical screen-space halftone dot pattern."
+description: |
+  Converts input image to greyscale, then thresholds against a periodic dot grid
+  to produce a halftone dot screen effect. Supports arbitrary screen angle, frequency,
+  and dot shape. Runs entirely in screen space (no texture lookup required for
+  the dot pattern) — efficient for real-time use.
+
+  The dot size at each pixel is modulated by the local greyscale luminance, so
+  bright areas have small dots and dark areas have large/merged dots, matching
+  the behavior of physical halftone reproduction.
+tags:
+  print: [halftone, newsprint]
+  color: [monochrome, CMYK]
+  shader_ops: [halftone, posterize, dither]
+  mood: [chaotic, aggressive]
+parameters:
+  - name: frequency
+    type: float
+    default: 60.0
+    range: [10.0, 300.0]
+    description: "Screen frequency in dots per 1024 pixels."
+  - name: angle_deg
+    type: float
+    default: 45.0
+    range: [0.0, 90.0]
+    description: "Screen grid rotation angle."
+  - name: dot_shape
+    type: enum
+    options: [round, square, line, diamond]
+    default: round
+  - name: softness
+    type: float
+    default: 0.1
+    range: [0.0, 0.5]
+    description: "Anti-aliasing softness on dot edge."
+  - name: bg_color
+    type: color
+    default: "#FFFFFF"
+    description: "Background (paper/substrate) color."
+  - name: ink_color
+    type: color
+    default: "#000000"
+    description: "Ink color."
+constraints:
+  do:
+    - "Apply greyscale conversion before halftone threshold."
+    - "Run in screen space (not UV space) to maintain consistent dot size."
+    - "Use multiply blend when compositing over color image."
+  avoid:
+    - "Applying halftone in UV space on low-resolution textures — moire artifacts."
+compat:
+  works_with:
+    - psc.print_artifact.halftone_screen.v1
+    - psc.print_artifact.cmyk_misregistration.v1
+    - psc.shader.paper_grain_overlay.v1
+outputs:
+  - kind: code_fragment
+    value: |
+      // GLSL halftone dot (screen space)
+      float halftone(vec2 fragCoord, float freq, float angle, float luma) {
+        float rad = radians(angle);
+        mat2 rot = mat2(cos(rad), -sin(rad), sin(rad), cos(rad));
+        vec2 uv = rot * fragCoord * freq / 1024.0;
+        vec2 cell = fract(uv) - 0.5;
+        float dist = length(cell);
+        float dotRadius = sqrt(1.0 - luma) * 0.5;
+        return smoothstep(dotRadius + 0.05, dotRadius - 0.05, dist);
+      }
+provenance:
+  sources:
+    - kind: note
+      value: "Analytical screen-space halftone — standard GLSL technique"
+version: 1
+created_at: "2026-04-10"
