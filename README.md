@@ -4,6 +4,28 @@ A curated, remixable database of psychedelic collage aesthetics, workflows, and 
 
 ---
 
+## Quick Start
+
+```bash
+# 1. Clone and install
+git clone https://github.com/merrypranxter/psychedelic_collage.git
+cd psychedelic_collage
+npm install
+
+# 2. Build the database indices
+node tools/build_index.js
+
+# 3. Try the tools
+node tools/query.js type=shader
+node tools/generate.js --count=3
+
+# 4. Open the interactive browser
+python3 -m http.server 8000
+# Then visit http://localhost:8000
+```
+
+---
+
 ## What This Is
 
 This repo is a **structured knowledge base** (YAML-first, human-readable) for the psychedelic collage visual language — covering styles, techniques, palettes, print artifacts, typography treatments, shader building blocks, material references, and composable pipelines.
@@ -37,6 +59,96 @@ psychedelic_collage/
     build_index.js            ← scans YAML entries → emits JSON indices
   README.md
 ```
+
+---
+
+## Tools
+
+### 🌐 Interactive Browser (`index.html`)
+Full-featured web interface to browse, search, and filter the database.
+
+**Features:**
+- Visual card-based browsing
+- Real-time search and filtering
+- Detailed entry modal views
+- Tag-based navigation
+- Statistics dashboard
+
+**Usage:**
+```bash
+# Start a local server
+python3 -m http.server 8000
+# Visit http://localhost:8000
+```
+
+### 🔍 Query Tool (`tools/query.js`)
+Command-line database queries and filtering.
+
+**Usage:**
+```bash
+# Filter by type
+node tools/query.js type=shader
+
+# Filter by tag
+node tools/query.js tag=mood:euphoric
+node tools/query.js tag=era:60s
+
+# Search across all fields
+node tools/query.js search=kaleidoscope
+
+# Get random entries
+node tools/query.js random --count=5
+
+# Combine filters
+node tools/query.js type=palette tag=era:60s
+
+# Output as JSON
+node tools/query.js type=shader --json > shaders.json
+```
+
+### 🎨 Combination Generator (`tools/generate.js`)
+Creates random aesthetic combinations for inspiration or AI prompts.
+
+**Usage:**
+```bash
+# Generate one combination
+node tools/generate.js
+
+# Generate multiple
+node tools/generate.js --count=10
+
+# Output as AI prompts
+node tools/generate.js --count=5 --prompt
+```
+
+**Example output:**
+```
+🌀 COMBINATION 1
+Style: Sixties Poster Op Art
+Palette: Acid Vibration (neon pink, electric yellow, cyan)
+Technique: Kaleidoscope Pattern
+Motif: Sacred Geometry Grid
+Typography: Psychedelic Poster Lettering
+
+💡 AI PROMPT:
+Sixties Poster Op Art, featuring sacred geometry grid, 
+with acid vibration color palette, using kaleidoscope 
+pattern technique, psychedelic poster lettering typography
+```
+
+### 🏗️ Index Builder (`tools/build_index.js`)
+Scans YAML entries and generates JSON indices.
+
+**Usage:**
+```bash
+node tools/build_index.js
+```
+
+**Generates:**
+- `db/indices/entries.json` - All entries (full data)
+- `db/indices/by_type.json` - Grouped by type
+- `db/indices/by_tag.json` - Indexed by tags
+- `db/indices/summary.json` - Lightweight summaries
 
 ---
 
