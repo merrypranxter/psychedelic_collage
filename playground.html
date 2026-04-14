@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shader Playground - Psychedelic Collage</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 3px solid #ff006e;
+    }
+
+    h1 {
+      color: #ff006e;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h3 {
+      color: #3a86ff;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      font-size: 0.9em;
+    }
+
+    .shader-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .shader-item {
+      background: #0f0f23;
+      border: 2px solid #3a86ff;
+      padding: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .shader-item:hover {
+      border-color: #ff006e;
+      transform: translateX(5px);
+    }
+
+    .shader-item.active {
+      background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+      border-color: #ff006e;
+    }
+
+    .shader-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .shader-summary {
+      font-size: 0.85em;
+      opacity: 0.8;
+    }
+
+    .canvas-area {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border: 2px solid #3a86ff;
+      border-radius: 10px;
+      min-width: 300px;
+    }
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    .control-group label {
+      display: block;
+      color: #3a86ff;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: #0f0f23;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #ff006e;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .value-display {
+      color: #ff006e;
+      font-weight: bold;
+      float: right;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+      border: none;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(255, 0, 110, 0.5);
+    }
+
+    .info {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border: 2px solid #3a86ff;
+      border-radius: 5px;
+      max-width: 400px;
+    }
+
+    .info h4 {
+      color: #ff006e;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #0f0f23;
+      border: 1px solid #3a86ff;
+      padding: 3px 10px;
+      border-radius: 15px;
+      font-size: 0.75em;
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h1>🌀 Shader Playground</h1>
+      
+      <div class="section">
+        <h3>Available Shaders</h3>
+        <div class="shader-list" id="shaderList">
+          <div style="opacity: 0.6; padding: 20px; text-align: center;">
+            Loading shaders...
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <button onclick="randomShader()">🎲 Random Shader</button>
+        <button onclick="combineShaders()">✨ Combine Random</button>
+      </div>
+    </div>
+
+    <div class="canvas-area">
+      <canvas id="canvas"></canvas>
+      
+      <div class="controls">
+        <h3 style="color: #ff006e; margin-bottom: 15px;">Controls</h3>
+        <div class="control-group">
+          <label>Time Speed <span class="value-display" id="speedValue">1.0x</span></label>
+          <input type="range" id="speed" min="0" max="5" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+          <label>Intensity <span class="value-display" id="intensityValue">1.0</span></label>
+          <input type="range" id="intensity" min="0" max="3" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+          <label>Scale <span class="value-display" id="scaleValue">1.0</span></label>
+          <input type="range" id="scale" min="0.1" max="5" step="0.1" value="1">
+        </div>
+        <button onclick="exportFrame()">📸 Export Frame</button>
+      </div>
+
+      <div class="info" id="info" style="display: none;">
+        <h4 id="infoTitle">Shader Name</h4>
+        <p id="infoSummary" style="margin-bottom: 10px; opacity: 0.9;"></p>
+        <div id="infoTags"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let canvas, gl, program;
+    let shaderEntries = [];
+    let currentShader = null;
+    let animationId;
+    let startTime = Date.now();
+    let uniforms = {
+      speed: 1.0,
+      intensity: 1.0,
+      scale: 1.0
+    };
+
+    // Initialize
+    async function init() {
+      // Load shader database
+      try {
+        const response = await fetch('./db/indices/by_type.json');
+        const data = await response.json();
+        shaderEntries = data.shader || [];
+        
+        if (shaderEntries.length === 0) {
+          console.error('No shader entries found');
+          return;
+        }
+
+        renderShaderList();
+        setupCanvas();
+        setupControls();
+        
+        // Load first shader
+        loadShader(shaderEntries[0]);
+      } catch (error) {
+        console.error('Failed to load shaders:', error);
+      }
+    }
+
+    function renderShaderList() {
+      const list = document.getElementById('shaderList');
+      list.innerHTML = shaderEntries.map((shader, index) => `
+        <div class="shader-item" onclick="loadShaderByIndex(${index})">
+          <div class="shader-name">${shader.name}</div>
+          <div class="shader-summary">${shader.summary || 'No description'}</div>
+        </div>
+      `).join('');
+    }
+
+    function setupCanvas() {
+      canvas = document.getElementById('canvas');
+      gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      
+      if (!gl) {
+        alert('WebGL not supported');
+        return;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+    }
+
+    function resizeCanvas() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      if (gl) {
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    function setupControls() {
+      const speed = document.getElementById('speed');
+      const intensity = document.getElementById('intensity');
+      const scale = document.getElementById('scale');
+
+      speed.addEventListener('input', (e) => {
+        uniforms.speed = parseFloat(e.target.value);
+        document.getElementById('speedValue').textContent = uniforms.speed.toFixed(1) + 'x';
+      });
+
+      intensity.addEventListener('input', (e) => {
+        uniforms.intensity = parseFloat(e.target.value);
+        document.getElementById('intensityValue').textContent = uniforms.intensity.toFixed(1);
+      });
+
+      scale.addEventListener('input', (e) => {
+        uniforms.scale = parseFloat(e.target.value);
+        document.getElementById('scaleValue').textContent = uniforms.scale.toFixed(1);
+      });
+    }
+
+    async function loadShaderByIndex(index) {
+      const shaderSummary = shaderEntries[index];
+      
+      // Load full entry
+      try {
+        const response = await fetch('./db/indices/entries.json');
+        const entries = await response.json();
+        const fullEntry = entries.find(e => e.id === shaderSummary.id);
+        
+        if (fullEntry) {
+          loadShader(fullEntry);
+        }
+      } catch (error) {
+        console.error('Failed to load shader details:', error);
+      }
+    }
+
+    function loadShader(shader) {
+      currentShader = shader;
+      
+      // Update UI
+      document.querySelectorAll('.shader-item').forEach(el => el.classList.remove('active'));
+      const index = shaderEntries.findIndex(s => s.id === shader.id);
+      if (index >= 0) {
+        document.querySelectorAll('.shader-item')[index].classList.add('active');
+      }
+
+      // Show info
+      const info = document.getElementById('info');
+      document.getElementById('infoTitle').textContent = shader.name;
+      document.getElementById('infoSummary').textContent = shader.summary || '';
+      
+      if (shader.tags) {
+        const tags = [];
+        Object.entries(shader.tags).forEach(([axis, values]) => {
+          const vals = Array.isArray(values) ? values : [values];
+          vals.forEach(v => tags.push(`${axis}: ${v}`));
+        });
+        document.getElementById('infoTags').innerHTML = tags.map(tag => 
+          `<span class="tag">${tag}</span>`
+        ).join('');
+      }
+      info.style.display = 'block';
+
+      // Compile shader
+      const fragmentCode = shader.glsl || shader.code || getDefaultFragmentShader();
+      compileAndRun(fragmentCode);
+    }
+
+    function getDefaultFragmentShader() {
+      return `
+precision highp float;
+
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform float u_intensity;
+uniform float u_scale;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution;
+  vec2 p = (uv - 0.5) * u_scale;
+  
+  float t = u_time * 0.5;
+  vec3 col = 0.5 + 0.5 * cos(t + p.xyx + vec3(0, 2, 4));
+  col *= u_intensity;
+  
+  gl_FragColor = vec4(col, 1.0);
+}
+      `;
+    }
+
+    function compileAndRun(fragmentSource) {
+      const vertexSource = `
+attribute vec4 a_position;
+void main() {
+  gl_Position = a_position;
+}
+      `;
+
+      // Create shaders
+      const vertexShader = createShader(gl.VERTEX_SHADER, vertexSource);
+      const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentSource);
+
+      if (!vertexShader || !fragmentShader) {
+        console.error('Shader compilation failed');
+        return;
+      }
+
+      // Create program
+      if (program) {
+        gl.deleteProgram(program);
+      }
+      
+      program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program link failed:', gl.getProgramInfoLog(program));
+        return;
+      }
+
+      gl.useProgram(program);
+
+      // Setup geometry
+      const positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1
+      ]), gl.STATIC_DRAW);
+
+      const positionLoc = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(positionLoc);
+      gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // Start animation
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+      startTime = Date.now();
+      render();
+    }
+
+    function createShader(type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+
+      return shader;
+    }
+
+    function render() {
+      const time = (Date.now() - startTime) / 1000.0 * uniforms.speed;
+
+      // Set uniforms
+      const resolutionLoc = gl.getUniformLocation(program, 'u_resolution');
+      const timeLoc = gl.getUniformLocation(program, 'u_time');
+      const intensityLoc = gl.getUniformLocation(program, 'u_intensity');
+      const scaleLoc = gl.getUniformLocation(program, 'u_scale');
+
+      if (resolutionLoc) gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+      if (timeLoc) gl.uniform1f(timeLoc, time);
+      if (intensityLoc) gl.uniform1f(intensityLoc, uniforms.intensity);
+      if (scaleLoc) gl.uniform1f(scaleLoc, uniforms.scale);
+
+      // Draw
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      animationId = requestAnimationFrame(render);
+    }
+
+    function randomShader() {
+      const randomIndex = Math.floor(Math.random() * shaderEntries.length);
+      loadShaderByIndex(randomIndex);
+    }
+
+    function combineShaders() {
+      alert('Combine feature coming soon! For now, try the Random Shader button.');
+    }
+
+    function exportFrame() {
+      const link = document.createElement('a');
+      link.download = `shader-${Date.now()}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+
+    // Start
+    init();
+  </script>
+</body>
+</html>
